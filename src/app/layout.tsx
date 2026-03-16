@@ -1,0 +1,47 @@
+import type { Metadata } from "next";
+import { Outfit, Fraunces, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { Sidebar } from "@/components/layout/sidebar";
+import { AIAssistant } from "@/components/chat/ai-assistant";
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+});
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Health Canopy — AI-Powered Hospital Inventory Intelligence",
+  description:
+    "Next-generation hospital inventory management with AI-powered demand forecasting, Joint Commission compliance engine, and stakeholder-specific workflows.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${outfit.variable} ${fraunces.variable} ${geistMono.variable} antialiased`}
+      >
+        <Sidebar />
+        <main className="ml-64 min-h-screen bg-background">
+          {children}
+        </main>
+        <AIAssistant />
+      </body>
+    </html>
+  );
+}
