@@ -106,10 +106,10 @@ export function Sidebar() {
       <div className="px-4 py-3 border-t border-white/8">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xs font-bold">
-            KA
+            AS
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white text-xs font-medium truncate">Kartik Aggarwal</p>
+            <p className="text-white text-xs font-medium truncate">Arielle Susanto</p>
             <p className="text-sidebar-text text-[11px] truncate">System Administrator</p>
           </div>
         </div>
