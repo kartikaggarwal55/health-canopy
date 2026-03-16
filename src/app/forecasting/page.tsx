@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Header } from "@/components/layout/header";
+import { useToast } from "@/components/ui/toast";
 import {
   Brain,
   AlertTriangle,
@@ -60,6 +61,9 @@ export default function ForecastingPage() {
   const [activeScenario, setActiveScenario] = useState<"baseline" | "flu-surge" | "supply-disruption">("baseline");
   const [expandedDay, setExpandedDay] = useState<string | null>("Mar 20");
   const [expandedInsight, setExpandedInsight] = useState<string | null>("AI-001");
+  const [actionedInsights, setActionedInsights] = useState<Set<string>>(new Set());
+  const [snoozedInsights, setSnoozedInsights] = useState<Set<string>>(new Set());
+  const { showToast } = useToast();
 
   const daySupplyBreakdown = useMemo(() => {
     if (!expandedDay) return null;
@@ -465,10 +469,38 @@ export default function ForecastingPage() {
                             <p className="text-xs text-emerald-600">{insight.impact}</p>
                           </div>
                         )}
-                        <div className="flex gap-3">
-                          <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors"><CheckCircle2 className="w-3.5 h-3.5" /> Take Action</button>
-                          <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-muted border border-border rounded-lg hover:bg-stone-50 transition-colors"><Clock className="w-3.5 h-3.5" /> Snooze</button>
-                        </div>
+                        {actionedInsights.has(insight.id) ? (
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                            <span className="text-xs font-medium text-emerald-700">Action taken — assigned to relevant department</span>
+                          </div>
+                        ) : snoozedInsights.has(insight.id) ? (
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-stone-100 border border-border">
+                            <Clock className="w-4 h-4 text-muted" />
+                            <span className="text-xs font-medium text-muted">Snoozed for 24 hours</span>
+                          </div>
+                        ) : (
+                          <div className="flex gap-3">
+                            <button
+                              onClick={() => {
+                                setActionedInsights((prev) => new Set(prev).add(insight.id));
+                                showToast(`Action initiated: ${insight.title}`);
+                              }}
+                              className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" /> Take Action
+                            </button>
+                            <button
+                              onClick={() => {
+                                setSnoozedInsights((prev) => new Set(prev).add(insight.id));
+                                showToast(`Snoozed: ${insight.title} — will resurface in 24h`, "info");
+                              }}
+                              className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-muted border border-border rounded-lg hover:bg-stone-50 transition-colors"
+                            >
+                              <Clock className="w-3.5 h-3.5" /> Snooze
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}

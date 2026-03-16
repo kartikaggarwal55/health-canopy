@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Header } from "@/components/layout/header";
+import { useToast } from "@/components/ui/toast";
 import {
   DollarSign,
   TrendingUp,
@@ -65,8 +66,21 @@ const deliveryStatusConfig: Record<string, { label: string; color: string; icon:
   "delivered": { label: "Delivered", color: "text-emerald-600", icon: CheckCircle2 },
 };
 
+function downloadCSV(filename: string, headers: string[], rows: string[][]) {
+  const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function BudgetPage() {
   const [activeTab, setActiveTab] = useState<"overview" | "orders" | "deliveries">("overview");
+  const [approvedPOs, setApprovedPOs] = useState<Set<string>>(new Set());
+  const { showToast } = useToast();
 
   // Summary calculations
   const totalAnnualBudget = budgetAllocation.reduce((s, b) => s + b.annualBudget, 0);
@@ -229,7 +243,24 @@ export default function BudgetPage() {
                   <h3 className="text-sm font-semibold text-foreground">Budget Allocation by Supply Category</h3>
                   <p className="text-xs text-muted mt-0.5">Annual budget, year-to-date spend, and AI-projected full-year spend</p>
                 </div>
-                <button className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5">
+                <button
+                  onClick={() => {
+                    downloadCSV(
+                      "budget-allocation.csv",
+                      ["Category", "Annual Budget", "YTD Spend", "YTD Budget", "Variance", "AI Forecast"],
+                      budgetAllocation.map((b) => [
+                        b.category,
+                        String(b.annualBudget),
+                        String(b.ytdSpend),
+                        String(b.ytdBudget),
+                        String(b.ytdSpend - b.ytdBudget),
+                        String(b.forecast),
+                      ])
+                    );
+                    showToast("Budget allocation exported to CSV");
+                  }}
+                  className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5"
+                >
                   <Download className="w-3.5 h-3.5" /> Export
                 </button>
               </div>
@@ -447,14 +478,29 @@ export default function BudgetPage() {
                       </table>
                     </div>
 
-                    {(po.status === "ai-recommended" || po.status === "pending-approval") && (
+                    {(po.status === "ai-recommended" || po.status === "pending-approval") && !approvedPOs.has(po.id) && (
                       <div className="flex gap-3 mt-3">
-                        <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors">
+                        <button
+                          onClick={() => {
+                            setApprovedPOs((prev) => new Set(prev).add(po.id));
+                            showToast(`${po.id} approved and submitted to ${po.supplier}`);
+                          }}
+                          className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors"
+                        >
                           <CheckCircle2 className="w-3.5 h-3.5" /> Approve & Submit
                         </button>
-                        <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-muted border border-border rounded-lg hover:bg-stone-50 transition-colors">
+                        <button
+                          onClick={() => showToast("Order editing requires ERP integration", "info")}
+                          className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-muted border border-border rounded-lg hover:bg-stone-50 transition-colors"
+                        >
                           Edit Order
                         </button>
+                      </div>
+                    )}
+                    {approvedPOs.has(po.id) && (
+                      <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs font-medium text-emerald-700">Approved & submitted</span>
                       </div>
                     )}
                   </div>
@@ -589,10 +635,16 @@ export default function BudgetPage() {
                           </ul>
                           {ds.impactSeverity === "critical" && (
                             <div className="flex gap-3 mt-3">
-                              <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                              <button
+                                onClick={() => showToast(`Emergency PO drafted for ${ds.supplier} — backup supplier order initiated`, "warning")}
+                                className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+                              >
                                 <ExternalLink className="w-3.5 h-3.5" /> Place Emergency Order
                               </button>
-                              <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors">
+                              <button
+                                onClick={() => showToast(`Contact request sent to ${ds.supplier} account representative`, "info")}
+                                className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors"
+                              >
                                 Contact Supplier
                               </button>
                             </div>

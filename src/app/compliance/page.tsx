@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Header } from "@/components/layout/header";
+import { useToast } from "@/components/ui/toast";
 import {
   ShieldCheck,
   AlertTriangle,
@@ -151,6 +152,7 @@ function ChapterCard({ chapter, expanded, onToggle }: { chapter: ComplianceChapt
 export default function CompliancePage() {
   const [expandedChapter, setExpandedChapter] = useState<string | null>("ec");
   const [activeTab, setActiveTab] = useState<"overview" | "equipment" | "findings" | "reports">("overview");
+  const { showToast } = useToast();
 
   const pmStats = {
     total: equipmentRegistry.length,
@@ -189,12 +191,16 @@ export default function CompliancePage() {
             {/* Quick Actions */}
             <div className="grid grid-cols-4 gap-3">
               {[
-                { label: "Run Mock Survey", icon: Play, desc: "Simulate TJC tracer", color: "bg-primary text-white hover:bg-primary-dark" },
-                { label: "Generate Audit Report", icon: FileText, desc: "One-click compliance export", color: "bg-white text-foreground border border-border hover:bg-stone-50" },
-                { label: "PM Status Report", icon: Wrench, desc: "Equipment maintenance", color: "bg-white text-foreground border border-border hover:bg-stone-50" },
-                { label: "96-Hr Sustainability", icon: ShieldCheck, desc: "Emergency preparedness", color: "bg-white text-foreground border border-border hover:bg-stone-50" },
+                { label: "Run Mock Survey", icon: Play, desc: "Simulate TJC tracer", color: "bg-primary text-white hover:bg-primary-dark", toast: "Mock survey initiated — simulating EC tracer walkthrough...", toastType: "info" as const },
+                { label: "Generate Audit Report", icon: FileText, desc: "One-click compliance export", color: "bg-white text-foreground border border-border hover:bg-stone-50", toast: "Audit report generated — 7 chapters, 8 findings documented", toastType: "success" as const },
+                { label: "PM Status Report", icon: Wrench, desc: "Equipment maintenance", color: "bg-white text-foreground border border-border hover:bg-stone-50", toast: "PM Status Report generated — 3 overdue, 1 due soon, 6 current", toastType: "success" as const },
+                { label: "96-Hr Sustainability", icon: ShieldCheck, desc: "Emergency preparedness", color: "bg-white text-foreground border border-border hover:bg-stone-50", toast: "96-hour sustainability calculation: 72 hours — below 96hr target. Gaps in IV fluids and ventilator circuits.", toastType: "warning" as const },
               ].map((action) => (
-                <button key={action.label} className={cn("flex items-center gap-3 p-4 rounded-xl transition-colors text-left", action.color)}>
+                <button
+                  key={action.label}
+                  onClick={() => showToast(action.toast, action.toastType)}
+                  className={cn("flex items-center gap-3 p-4 rounded-xl transition-colors text-left", action.color)}
+                >
                   <action.icon className="w-5 h-5 shrink-0" />
                   <div>
                     <p className="text-sm font-semibold">{action.label}</p>
@@ -276,7 +282,25 @@ export default function CompliancePage() {
                 <h3 className="text-sm font-semibold text-foreground">Medical Equipment Inventory Registry</h3>
                 <p className="text-xs text-muted mt-0.5">Per EC.02.04.01 EP 2 — Complete inventory of all medical equipment with risk classification</p>
               </div>
-              <button className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5">
+              <button
+                onClick={() => {
+                  const csv = [
+                    ["ID", "Name", "Model", "Manufacturer", "Serial", "Department", "Risk", "Life Support", "PM Status", "Next PM", "AEM", "Status"].join(","),
+                    ...equipmentRegistry.map((eq) =>
+                      [eq.id, `"${eq.name}"`, `"${eq.model}"`, `"${eq.manufacturer}"`, eq.serialNumber, `"${eq.department}"`, eq.riskLevel, eq.isLifeSupport, eq.pmStatus, eq.nextPM, eq.aemApplied, eq.status].join(",")
+                    ),
+                  ].join("\n");
+                  const blob = new Blob([csv], { type: "text/csv" });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = "equipment-registry.csv";
+                  a.click();
+                  URL.revokeObjectURL(url);
+                  showToast(`Exported ${equipmentRegistry.length} equipment records to CSV`);
+                }}
+                className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5"
+              >
                 <Download className="w-3.5 h-3.5" /> Export Registry
               </button>
             </div>
@@ -484,7 +508,10 @@ export default function CompliancePage() {
                   <h4 className="text-sm font-semibold text-foreground">{report.title}</h4>
                   <p className="text-xs text-muted mt-1">{report.desc}</p>
                   <div className="flex items-center gap-3 mt-3">
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors">
+                    <button
+                      onClick={() => showToast(`${report.title} generated successfully`)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors"
+                    >
                       <Download className="w-3.5 h-3.5" /> Generate
                     </button>
                     <span className="text-[11px] text-muted">Format: {report.format}</span>

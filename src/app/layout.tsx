@@ -3,6 +3,7 @@ import { Outfit, Fraunces, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/layout/sidebar";
 import { AIAssistant } from "@/components/chat/ai-assistant";
+import { ToastProvider } from "@/components/ui/toast";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -36,11 +37,13 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${fraunces.variable} ${geistMono.variable} antialiased`}
       >
-        <Sidebar />
-        <main className="ml-64 min-h-screen bg-background">
-          {children}
-        </main>
-        <AIAssistant />
+        <ToastProvider>
+          <Sidebar />
+          <main className="ml-64 min-h-screen bg-background">
+            {children}
+          </main>
+          <AIAssistant />
+        </ToastProvider>
       </body>
     </html>
   );

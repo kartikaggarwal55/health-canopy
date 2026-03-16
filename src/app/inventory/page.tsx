@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Header } from "@/components/layout/header";
+import { useToast } from "@/components/ui/toast";
 import {
   Search,
   Filter,
@@ -83,6 +84,7 @@ function StockBar({ current, par, reorder }: { current: number; par: number; reo
 }
 
 export default function InventoryPage() {
+  const { showToast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -240,11 +242,32 @@ export default function InventoryPage() {
               ))}
             </select>
 
-            <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors">
+            <button
+              onClick={() => showToast("Add Item requires ERP integration — use the AI assistant to draft a new item request", "info")}
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors"
+            >
               <Plus className="w-4 h-4" />
               Add Item
             </button>
-            <button className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors">
+            <button
+              onClick={() => {
+                const csv = [
+                  ["ID", "Name", "SKU", "Category", "Department", "Stock", "PAR", "Reorder Point", "Unit Cost", "Status", "Supplier", "Expiration"].join(","),
+                  ...inventoryItems.map((i) =>
+                    [i.id, `"${i.name}"`, i.sku, i.category, `"${i.department}"`, i.currentStock, i.parLevel, i.reorderPoint, i.unitCost, i.status, `"${i.supplier}"`, i.expirationDate || "N/A"].join(",")
+                  ),
+                ].join("\n");
+                const blob = new Blob([csv], { type: "text/csv" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "inventory-export.csv";
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast(`Exported ${inventoryItems.length} inventory items to CSV`);
+              }}
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors"
+            >
               <Download className="w-4 h-4" />
               Export
             </button>
@@ -350,13 +373,22 @@ export default function InventoryPage() {
                     <p className="text-xs text-muted mt-0.5">SKU: {item.sku} | Lot: {item.lotNumber}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5">
+                    <button
+                      onClick={() => showToast(`Reorder request initiated for ${item.name} — PO draft created for ${item.supplier}`)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5"
+                    >
                       <RefreshCw className="w-3.5 h-3.5" /> Reorder
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5">
+                    <button
+                      onClick={() => showToast(`Transfer request for ${item.name} — select destination in ERP`, "info")}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5"
+                    >
                       <ArrowRightLeft className="w-3.5 h-3.5" /> Transfer
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5">
+                    <button
+                      onClick={() => showToast(`Full transaction history for ${item.name} — requires ERP integration`, "info")}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5"
+                    >
                       <Eye className="w-3.5 h-3.5" /> Full History
                     </button>
                   </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Header } from "@/components/layout/header";
+import { useToast } from "@/components/ui/toast";
 import {
   BarChart3,
   TrendingUp,
@@ -62,6 +63,7 @@ const kpiCards = [
 
 export default function AnalyticsPage() {
   const [timeRange, setTimeRange] = useState<"30d" | "90d" | "12m">("12m");
+  const { showToast } = useToast();
 
   return (
     <div className="min-h-screen">
@@ -89,7 +91,25 @@ export default function AnalyticsPage() {
               </button>
             ))}
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors">
+          <button
+            onClick={() => {
+              const csv = [
+                ["Vendor", "On-Time %", "Fill Rate %", "Avg Lead Days", "Orders", "Spend"].join(","),
+                ...supplierPerformance.map((s) =>
+                  [`"${s.name}"`, s.onTimeRate, s.fillRate, s.avgLeadDays, s.orders, s.spend].join(",")
+                ),
+              ].join("\n");
+              const blob = new Blob([csv], { type: "text/csv" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `analytics-report-${timeRange}.csv`;
+              a.click();
+              URL.revokeObjectURL(url);
+              showToast(`Analytics report exported (${timeRange === "30d" ? "30 Days" : timeRange === "90d" ? "90 Days" : "12 Months"})`);
+            }}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors"
+          >
             <Download className="w-4 h-4" />
             Export Report
           </button>
