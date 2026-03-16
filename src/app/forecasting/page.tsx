@@ -179,7 +179,7 @@ export default function ForecastingPage() {
           <div className="grid grid-cols-3 gap-4 mb-6">
             {([
               { id: "baseline" as const, title: "Normal Operations", desc: "Current consumption continues. No disruptions.", icon: CheckCircle2, iconColor: "text-accent" },
-              { id: "flu-surge" as const, title: "Flu Surge Hits Contra Costa County", desc: "What if ED respiratory visits increase 40% over the next 10 days?", icon: Thermometer, iconColor: "text-red-600" },
+              { id: "flu-surge" as const, title: "Flu Surge Hits San Francisco", desc: "What if ED respiratory visits increase 40% over the next 10 days?", icon: Thermometer, iconColor: "text-red-600" },
               { id: "supply-disruption" as const, title: "Primary Supplier Delayed 5 Days", desc: "What if Medline and Cardinal Health shipments are delayed 5 days?", icon: AlertOctagon, iconColor: "text-amber-600" },
             ]).map((s) => (
               <button key={s.id} onClick={() => setActiveScenario(s.id)}
@@ -277,7 +277,7 @@ export default function ForecastingPage() {
                 <ul className="text-xs text-foreground space-y-1.5 list-disc list-inside">
                   <li>Switch gloves to <span className="font-semibold">McKesson backup contract</span> — 2-day lead, +$0.02/unit</li>
                   <li>Redirect drape POs to <span className="font-semibold">Halyard Health</span> — covers OR through Mar 25</li>
-                  <li>Transfer 100 gowns from <span className="font-semibold">Richmond Health Center</span> (surplus)</li>
+                  <li>Transfer 100 gowns from <span className="font-semibold">Mount Zion campus</span> (surplus)</li>
                   <li>Increase PAR levels 20% on Medline/Cardinal items temporarily</li>
                 </ul>
               </div>

@@ -158,7 +158,7 @@ Total pending value: **$16,720**. Want me to approve PO-4522 or convert the AI-r
       toolMs: 2000,
       content: `**Flu Surge Intelligence Report**
 
-CDC ILINet data shows a **34% week-over-week increase** in influenza-like illness (ILI) across Contra Costa County. Wastewater surveillance confirms rising viral load. Our model predicts a **40\u201360% increase in ED respiratory visits** within 7\u201310 days.
+CDC ILINet data shows a **34% week-over-week increase** in influenza-like illness (ILI) across San Francisco County. Wastewater surveillance confirms rising viral load. Our model predicts a **40\u201360% increase in ED respiratory visits** within 7\u201310 days.
 
 **Current Respiratory Supply Status:**
 | Item | On Hand | PAR | Status |
@@ -400,7 +400,7 @@ Want me to model an alternative scenario or drill into a specific department?`,
 **COVID Test Waste Risk:**
 At current consumption (~45 tests/day), approximately **1,075 tests will expire unused**. Potential waste: $5,644.
 
-**AI Recommendation:** Redistribute excess COVID tests to Health Center locations (Richmond, Pittsburg, Concord) or coordinate with County Public Health for community testing events.
+**AI Recommendation:** Redistribute excess COVID tests to Mission Bay, Mount Zion, and Benioff campuses, or coordinate with SF Dept of Public Health for community testing events.
 
 Want me to initiate a redistribution request?`,
     };
