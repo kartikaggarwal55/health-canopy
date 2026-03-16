@@ -339,15 +339,15 @@ export default function AIInsightsPage() {
                           <p className="text-xs text-muted leading-relaxed">{insight.description}</p>
                         </div>
                         {insight.suggestedAction && (
-                          <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-                            <h5 className="text-xs font-semibold text-primary mb-2 flex items-center gap-1.5"><Target className="w-3.5 h-3.5" /> Recommended Action</h5>
-                            <p className="text-xs text-foreground leading-relaxed">{insight.suggestedAction}</p>
+                          <div className="p-4 rounded-lg bg-white border border-border">
+                            <h5 className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5"><Target className="w-3.5 h-3.5" /> Recommended Action</h5>
+                            <p className="text-xs text-muted leading-relaxed">{insight.suggestedAction}</p>
                           </div>
                         )}
                         {insight.impact && (
-                          <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
-                            <h5 className="text-xs font-semibold text-accent mb-1">Projected Impact</h5>
-                            <p className="text-xs text-accent">{insight.impact}</p>
+                          <div className="p-4 rounded-lg bg-white border border-border">
+                            <h5 className="text-xs font-semibold text-foreground mb-1">Projected Impact</h5>
+                            <p className="text-xs text-muted">{insight.impact}</p>
                           </div>
                         )}
                         {actionedInsights.has(insight.id) ? (
