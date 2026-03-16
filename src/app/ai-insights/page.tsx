@@ -46,10 +46,10 @@ import {
 } from "recharts";
 
 const severityConfig = {
-  high: { bg: "bg-red-50 border-red-100", icon: AlertCircle, iconColor: "text-red-500", badge: "bg-red-100 text-red-700", ring: "ring-red-200" },
-  medium: { bg: "bg-amber-50 border-amber-100", icon: AlertTriangle, iconColor: "text-amber-500", badge: "bg-amber-100 text-amber-700", ring: "ring-amber-200" },
-  low: { bg: "bg-stone-100 border-stone-200", icon: Activity, iconColor: "text-stone-500", badge: "bg-stone-200 text-stone-700", ring: "ring-stone-200" },
-  info: { bg: "bg-emerald-50 border-emerald-100", icon: Sparkles, iconColor: "text-emerald-500", badge: "bg-emerald-100 text-emerald-700", ring: "ring-emerald-200" },
+  high: { bg: "bg-red-50 border-red-200", icon: AlertCircle, iconColor: "text-red-600", badge: "bg-red-100 text-red-700", ring: "ring-red-200" },
+  medium: { bg: "bg-amber-50 border-amber-200", icon: AlertTriangle, iconColor: "text-amber-600", badge: "bg-amber-100 text-amber-700", ring: "ring-amber-200" },
+  low: { bg: "bg-stone-50 border-stone-200", icon: Activity, iconColor: "text-stone-500", badge: "bg-stone-200 text-stone-600", ring: "ring-stone-200" },
+  info: { bg: "bg-accent/5 border-accent/20", icon: Sparkles, iconColor: "text-accent", badge: "bg-accent/10 text-accent", ring: "ring-accent/20" },
 };
 
 const typeLabels: Record<string, string> = {
@@ -94,12 +94,12 @@ export default function AIInsightsPage() {
         {/* Status Summary */}
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: "In Stock", value: inventoryItems.filter((i) => i.status === "in-stock").length, color: "bg-emerald-50 text-emerald-600", icon: CheckCircle2 },
+            { label: "In Stock", value: inventoryItems.filter((i) => i.status === "in-stock").length, color: "bg-accent/10 text-accent", icon: CheckCircle2 },
             { label: "Low Stock", value: lowStockItems.length, color: "bg-amber-50 text-amber-600", icon: AlertTriangle },
             { label: "Critical / OOS", value: criticalItems.length, color: "bg-red-50 text-red-600", icon: AlertCircle },
-            { label: "Expiring Soon", value: expiringItems.length, color: "bg-orange-50 text-orange-600", icon: Clock },
-            { label: "On-Hand Value", value: `$${(totalValue / 1000).toFixed(0)}K`, color: "bg-rose-50 text-rose-600", icon: BarChart3 },
-            { label: "AI Alerts", value: currentStateInsights.length, color: "bg-orange-50 text-orange-700", icon: Zap },
+            { label: "Expiring Soon", value: expiringItems.length, color: "bg-amber-50 text-amber-600", icon: Clock },
+            { label: "On-Hand Value", value: `$${(totalValue / 1000).toFixed(0)}K`, color: "bg-primary/10 text-primary", icon: BarChart3 },
+            { label: "AI Alerts", value: currentStateInsights.length, color: "bg-accent/10 text-accent", icon: Zap },
           ].map((s) => (
             <div key={s.label} className="bg-white rounded-xl border border-border p-4 flex items-center gap-3">
               <div className={cn("p-2 rounded-lg", s.color)}><s.icon className="w-4 h-4" /></div>
@@ -245,7 +245,7 @@ export default function AIInsightsPage() {
             <h3 className="text-sm font-semibold text-red-700 mb-3">Critical & Out of Stock ({criticalItems.length})</h3>
             <div className="space-y-2.5">
               {criticalItems.map((item) => (
-                <div key={item.id} className="p-3 rounded-lg bg-red-50 border border-red-100">
+                <div key={item.id} className="p-3 rounded-lg bg-red-50 border border-red-200">
                   <p className="text-xs font-semibold text-foreground">{item.name}</p>
                   <p className="text-[11px] text-muted mt-0.5">{item.department} — {item.supplier}</p>
                   <div className="flex items-center justify-between mt-1.5">
@@ -264,7 +264,7 @@ export default function AIInsightsPage() {
             <h3 className="text-sm font-semibold text-amber-700 mb-3">Low Stock ({lowStockItems.length})</h3>
             <div className="space-y-2.5">
               {lowStockItems.map((item) => (
-                <div key={item.id} className="p-3 rounded-lg bg-amber-50 border border-amber-100">
+                <div key={item.id} className="p-3 rounded-lg bg-amber-50 border border-amber-200">
                   <p className="text-xs font-semibold text-foreground">{item.name}</p>
                   <p className="text-[11px] text-muted mt-0.5">{item.department} — {item.supplier}</p>
                   <div className="flex items-center justify-between mt-1.5">
@@ -278,14 +278,14 @@ export default function AIInsightsPage() {
 
           {/* Expiring */}
           <div className="bg-white rounded-xl border border-border p-5">
-            <h3 className="text-sm font-semibold text-orange-700 mb-3">Expiring Soon ({expiringItems.length})</h3>
+            <h3 className="text-sm font-semibold text-amber-700 mb-3">Expiring Soon ({expiringItems.length})</h3>
             <div className="space-y-2.5">
               {expiringItems.map((item) => (
-                <div key={item.id} className="p-3 rounded-lg bg-orange-50 border border-orange-100">
+                <div key={item.id} className="p-3 rounded-lg bg-amber-50 border border-amber-200">
                   <p className="text-xs font-semibold text-foreground">{item.name}</p>
                   <p className="text-[11px] text-muted mt-0.5">{item.department} — {item.currentStock} units</p>
                   <div className="flex items-center justify-between mt-1.5">
-                    <span className="text-[11px] font-bold text-orange-600">Expires: {item.expirationDate}</span>
+                    <span className="text-[11px] font-bold text-amber-600">Expires: {item.expirationDate}</span>
                     <span className="text-[11px] text-muted">${(item.currentStock * item.unitCost).toLocaleString()} at risk</span>
                   </div>
                 </div>
@@ -317,7 +317,7 @@ export default function AIInsightsPage() {
                     onClick={() => setExpandedInsight(isExpanded ? null : insight.id)}
                     className="w-full flex items-start gap-4 p-5 text-left hover:bg-white/30 transition-colors"
                   >
-                    <div className={cn("p-2 rounded-lg shrink-0", insight.severity === "high" ? "bg-red-100" : insight.severity === "medium" ? "bg-amber-100" : insight.severity === "info" ? "bg-emerald-100" : "bg-stone-200")}>
+                    <div className={cn("p-2 rounded-lg shrink-0", insight.severity === "high" ? "bg-red-100" : insight.severity === "medium" ? "bg-amber-100" : insight.severity === "info" ? "bg-accent/10" : "bg-stone-100")}>
                       <TypeIcon className={cn("w-5 h-5", config.iconColor)} />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -345,18 +345,18 @@ export default function AIInsightsPage() {
                           </div>
                         )}
                         {insight.impact && (
-                          <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
-                            <h5 className="text-xs font-semibold text-emerald-700 mb-1">Projected Impact</h5>
-                            <p className="text-xs text-emerald-600">{insight.impact}</p>
+                          <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
+                            <h5 className="text-xs font-semibold text-accent mb-1">Projected Impact</h5>
+                            <p className="text-xs text-accent">{insight.impact}</p>
                           </div>
                         )}
                         {actionedInsights.has(insight.id) ? (
-                          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                            <span className="text-xs font-medium text-emerald-700">Action taken — assigned to relevant department</span>
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-accent/5 border border-accent/20">
+                            <CheckCircle2 className="w-4 h-4 text-accent" />
+                            <span className="text-xs font-medium text-accent">Action taken — assigned to relevant department</span>
                           </div>
                         ) : snoozedInsights.has(insight.id) ? (
-                          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-stone-100 border border-border">
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-stone-50 border border-stone-200">
                             <Clock className="w-4 h-4 text-muted" />
                             <span className="text-xs font-medium text-muted">Snoozed for 24 hours</span>
                           </div>
