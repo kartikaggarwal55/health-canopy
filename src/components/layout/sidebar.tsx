@@ -45,9 +45,9 @@ export function Sidebar() {
       <div className="px-4 py-3 border-b border-white/8">
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-sidebar-hover text-sm text-sidebar-text">
           <div className="w-6 h-6 rounded bg-primary/25 flex items-center justify-center text-[11px] font-bold text-primary-light">
-            CC
+            UC
           </div>
-          <span className="flex-1 text-left text-xs truncate">Contra Costa RMC</span>
+          <span className="flex-1 text-left text-xs truncate">UCSF Medical Center</span>
         </div>
       </div>
 

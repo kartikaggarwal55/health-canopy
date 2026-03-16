@@ -1,27 +1,32 @@
 // ============================================================
-// Mock Data for Health Canopy — UCSF Contra Costa Healthcare
+// Mock Data for Health Canopy — UCSF Health
 // ============================================================
 
 export const organization = {
-  name: "Contra Costa Regional Medical Center",
-  system: "UCSF Contra Costa Healthcare",
+  name: "UCSF Medical Center",
+  system: "UCSF Health",
   locations: [
-    { id: "ccmc", name: "Contra Costa Regional Medical Center", city: "Martinez, CA" },
-    { id: "hc-richmond", name: "Health Center — Richmond", city: "Richmond, CA" },
-    { id: "hc-pittsburg", name: "Health Center — Pittsburg", city: "Pittsburg, CA" },
-    { id: "hc-concord", name: "Health Center — Concord", city: "Concord, CA" },
+    { id: "parnassus", name: "UCSF Medical Center at Parnassus Heights", city: "San Francisco, CA" },
+    { id: "mission-bay", name: "UCSF Medical Center at Mission Bay", city: "San Francisco, CA" },
+    { id: "mount-zion", name: "UCSF Medical Center at Mount Zion", city: "San Francisco, CA" },
+    { id: "benioff-sf", name: "UCSF Benioff Children's Hospital SF", city: "San Francisco, CA" },
+    { id: "benioff-oak", name: "UCSF Benioff Children's Hospital Oakland", city: "Oakland, CA" },
   ],
 };
 
 export const departments = [
-  { id: "ed", name: "Emergency Department", icon: "Siren", itemCount: 1847, location: "ccmc" },
-  { id: "or", name: "Operating Rooms", icon: "Scissors", itemCount: 2341, location: "ccmc" },
-  { id: "pharmacy", name: "Pharmacy", icon: "Pill", itemCount: 3215, location: "ccmc" },
-  { id: "central-supply", name: "Materials Management", icon: "Warehouse", itemCount: 5623, location: "ccmc" },
-  { id: "icu", name: "Intensive Care Unit", icon: "HeartPulse", itemCount: 1456, location: "ccmc" },
-  { id: "medsurg", name: "Med/Surg", icon: "Bed", itemCount: 1234, location: "ccmc" },
-  { id: "ld", name: "Labor & Delivery", icon: "Baby", itemCount: 987, location: "ccmc" },
-  { id: "lab", name: "Laboratory", icon: "FlaskConical", itemCount: 2109, location: "ccmc" },
+  { id: "ed", name: "Emergency Department", icon: "Siren", itemCount: 3245, location: "parnassus" },
+  { id: "or", name: "Operating Rooms", icon: "Scissors", itemCount: 4872, location: "parnassus" },
+  { id: "pharmacy", name: "Pharmacy", icon: "Pill", itemCount: 6430, location: "parnassus" },
+  { id: "central-supply", name: "Materials Management", icon: "Warehouse", itemCount: 11246, location: "parnassus" },
+  { id: "icu", name: "Intensive Care Unit", icon: "HeartPulse", itemCount: 2912, location: "parnassus" },
+  { id: "medsurg", name: "Med/Surg", icon: "Bed", itemCount: 2468, location: "parnassus" },
+  { id: "ld", name: "Labor & Delivery", icon: "Baby", itemCount: 1974, location: "mission-bay" },
+  { id: "lab", name: "Laboratory", icon: "FlaskConical", itemCount: 4218, location: "parnassus" },
+  { id: "transplant", name: "Transplant Services", icon: "HeartPulse", itemCount: 1856, location: "parnassus" },
+  { id: "oncology", name: "Oncology / Cancer Center", icon: "Activity", itemCount: 2134, location: "mission-bay" },
+  { id: "neuro", name: "Neurosciences", icon: "Brain", itemCount: 1645, location: "parnassus" },
+  { id: "cardiology", name: "Cardiology", icon: "HeartPulse", itemCount: 1523, location: "parnassus" },
 ];
 
 export type InventoryItem = {
@@ -45,21 +50,21 @@ export type InventoryItem = {
 };
 
 export const inventoryItems: InventoryItem[] = [
-  { id: "INV-001", name: "Nitrile Examination Gloves (M)", category: "PPE", department: "Materials Management", sku: "PPE-GLV-NIT-M", currentStock: 12400, parLevel: 15000, reorderPoint: 8000, unitCost: 0.12, lotNumber: "LT-2026-0341", expirationDate: "2027-09-15", lastReceived: "2026-03-10", supplier: "Medline Industries", status: "in-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-441" },
-  { id: "INV-002", name: "N95 Respirator Masks", category: "PPE", department: "Materials Management", sku: "PPE-MSK-N95", currentStock: 3200, parLevel: 5000, reorderPoint: 2500, unitCost: 1.85, lotNumber: "LT-2026-0287", expirationDate: "2028-01-20", lastReceived: "2026-03-08", supplier: "3M Healthcare", status: "low-stock", supplyChain: "med-surg", gpoContract: "Premier #PP-2025-1187" },
-  { id: "INV-003", name: "IV Catheter 20G", category: "Supplies", department: "Emergency Department", sku: "SUP-IVC-20G", currentStock: 450, parLevel: 600, reorderPoint: 300, unitCost: 3.45, lotNumber: "LT-2026-0512", expirationDate: "2027-06-30", lastReceived: "2026-03-12", supplier: "BD Medical", status: "low-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-602" },
-  { id: "INV-004", name: "Propofol 200mg/20mL", category: "Medication", department: "Pharmacy", sku: "RX-PRO-200", currentStock: 180, parLevel: 250, reorderPoint: 100, unitCost: 12.50, lotNumber: "LT-2026-0198", expirationDate: "2026-06-15", lastReceived: "2026-03-05", supplier: "Fresenius Kabi", status: "expiring-soon", supplyChain: "pharmacy", gpoContract: "Vizient #RX-2025-318" },
-  { id: "INV-005", name: "Surgical Drape Kit — Total Knee", category: "Surgical", department: "Operating Rooms", sku: "SRG-DRP-TKR", currentStock: 85, parLevel: 100, reorderPoint: 40, unitCost: 34.00, lotNumber: "LT-2026-0445", expirationDate: null, lastReceived: "2026-03-11", supplier: "Cardinal Health", status: "in-stock", supplyChain: "surgical", gpoContract: "Premier #SG-2025-773" },
-  { id: "INV-006", name: "Heparin Sodium 5000U/mL", category: "Medication", department: "Pharmacy", sku: "RX-HEP-5000", currentStock: 45, parLevel: 200, reorderPoint: 80, unitCost: 8.75, lotNumber: "LT-2026-0089", expirationDate: "2026-11-30", lastReceived: "2026-02-28", supplier: "Pfizer", status: "critical", supplyChain: "pharmacy", gpoContract: "Vizient #RX-2025-105" },
-  { id: "INV-007", name: "Endotracheal Tube 7.5mm", category: "Respiratory", department: "ICU", sku: "RSP-ETT-75", currentStock: 120, parLevel: 150, reorderPoint: 60, unitCost: 7.20, lotNumber: "LT-2026-0334", expirationDate: "2028-03-15", lastReceived: "2026-03-09", supplier: "Medtronic", status: "in-stock", supplyChain: "med-surg" },
-  { id: "INV-008", name: "Foley Catheter 16Fr", category: "Supplies", department: "Med/Surg", sku: "SUP-FOL-16F", currentStock: 210, parLevel: 300, reorderPoint: 120, unitCost: 4.50, lotNumber: "LT-2026-0267", expirationDate: "2027-12-31", lastReceived: "2026-03-07", supplier: "Teleflex", status: "low-stock", supplyChain: "med-surg" },
-  { id: "INV-009", name: "Fentanyl Citrate 100mcg/2mL", category: "Controlled Substance", department: "Pharmacy", sku: "RX-FEN-100", currentStock: 340, parLevel: 400, reorderPoint: 150, unitCost: 2.30, lotNumber: "LT-2026-0156", expirationDate: "2027-02-28", lastReceived: "2026-03-13", supplier: "Akorn", status: "in-stock", supplyChain: "pharmacy", gpoContract: "Premier #CS-2025-042" },
-  { id: "INV-010", name: "Sterile Surgical Gown (L)", category: "PPE", department: "Operating Rooms", sku: "PPE-GWN-STR-L", currentStock: 540, parLevel: 800, reorderPoint: 400, unitCost: 6.75, lotNumber: "LT-2026-0378", expirationDate: null, lastReceived: "2026-03-06", supplier: "Halyard Health", status: "low-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-441" },
-  { id: "INV-011", name: "Blood Collection Tubes (EDTA)", category: "Laboratory", department: "Laboratory", sku: "LAB-BCT-EDTA", currentStock: 8500, parLevel: 10000, reorderPoint: 5000, unitCost: 0.35, lotNumber: "LT-2026-0401", expirationDate: "2027-08-15", lastReceived: "2026-03-11", supplier: "BD Vacutainer", status: "in-stock", supplyChain: "lab", gpoContract: "Vizient #LB-2025-209" },
-  { id: "INV-012", name: "Oxytocin 10U/mL", category: "Medication", department: "Labor & Delivery", sku: "RX-OXY-10U", currentStock: 95, parLevel: 120, reorderPoint: 50, unitCost: 5.60, lotNumber: "LT-2026-0223", expirationDate: "2026-09-30", lastReceived: "2026-03-04", supplier: "Par Pharmaceutical", status: "in-stock", supplyChain: "pharmacy" },
-  { id: "INV-013", name: "Suture — Vicryl 3-0", category: "Surgical", department: "Operating Rooms", sku: "SRG-SUT-V30", currentStock: 15, parLevel: 200, reorderPoint: 80, unitCost: 9.80, lotNumber: "LT-2026-0489", expirationDate: "2028-06-30", lastReceived: "2026-02-20", supplier: "Ethicon (J&J)", status: "critical", supplyChain: "surgical", gpoContract: "Premier #SG-2025-891" },
-  { id: "INV-014", name: "Rapid COVID-19 Antigen Test", category: "Testing", department: "Emergency Department", sku: "TST-COV-RAP", currentStock: 2100, parLevel: 3000, reorderPoint: 1000, unitCost: 5.25, lotNumber: "LT-2026-0567", expirationDate: "2026-04-30", lastReceived: "2026-03-01", supplier: "Abbott Diagnostics", status: "expiring-soon", supplyChain: "lab" },
-  { id: "INV-015", name: "Ventilator Circuit (Adult)", category: "Respiratory", department: "ICU", sku: "RSP-VCR-ADL", currentStock: 0, parLevel: 50, reorderPoint: 20, unitCost: 18.50, lotNumber: "LT-2026-0301", expirationDate: null, lastReceived: "2026-02-15", supplier: "Fisher & Paykel", status: "out-of-stock", supplyChain: "med-surg" },
+  { id: "INV-001", name: "Nitrile Examination Gloves (M)", category: "PPE", department: "Materials Management", sku: "PPE-GLV-NIT-M", currentStock: 24800, parLevel: 30000, reorderPoint: 16000, unitCost: 0.12, lotNumber: "LT-2026-0341", expirationDate: "2027-09-15", lastReceived: "2026-03-10", supplier: "Medline Industries", status: "in-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-441" },
+  { id: "INV-002", name: "N95 Respirator Masks", category: "PPE", department: "Materials Management", sku: "PPE-MSK-N95", currentStock: 6400, parLevel: 10000, reorderPoint: 5000, unitCost: 1.85, lotNumber: "LT-2026-0287", expirationDate: "2028-01-20", lastReceived: "2026-03-08", supplier: "3M Healthcare", status: "low-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-1187" },
+  { id: "INV-003", name: "IV Catheter 20G", category: "Supplies", department: "Emergency Department", sku: "SUP-IVC-20G", currentStock: 900, parLevel: 1200, reorderPoint: 600, unitCost: 3.45, lotNumber: "LT-2026-0512", expirationDate: "2027-06-30", lastReceived: "2026-03-12", supplier: "BD Medical", status: "low-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-602" },
+  { id: "INV-004", name: "Propofol 200mg/20mL", category: "Medication", department: "Pharmacy", sku: "RX-PRO-200", currentStock: 360, parLevel: 500, reorderPoint: 200, unitCost: 12.50, lotNumber: "LT-2026-0198", expirationDate: "2026-06-15", lastReceived: "2026-03-05", supplier: "Fresenius Kabi", status: "expiring-soon", supplyChain: "pharmacy", gpoContract: "Vizient #RX-2025-318" },
+  { id: "INV-005", name: "Surgical Drape Kit — Total Knee", category: "Surgical", department: "Operating Rooms", sku: "SRG-DRP-TKR", currentStock: 170, parLevel: 200, reorderPoint: 80, unitCost: 34.00, lotNumber: "LT-2026-0445", expirationDate: null, lastReceived: "2026-03-11", supplier: "Cardinal Health", status: "in-stock", supplyChain: "surgical", gpoContract: "Vizient #SG-2025-773" },
+  { id: "INV-006", name: "Heparin Sodium 5000U/mL", category: "Medication", department: "Pharmacy", sku: "RX-HEP-5000", currentStock: 90, parLevel: 400, reorderPoint: 160, unitCost: 8.75, lotNumber: "LT-2026-0089", expirationDate: "2026-11-30", lastReceived: "2026-02-28", supplier: "Pfizer", status: "critical", supplyChain: "pharmacy", gpoContract: "Vizient #RX-2025-105" },
+  { id: "INV-007", name: "Endotracheal Tube 7.5mm", category: "Respiratory", department: "ICU", sku: "RSP-ETT-75", currentStock: 240, parLevel: 300, reorderPoint: 120, unitCost: 7.20, lotNumber: "LT-2026-0334", expirationDate: "2028-03-15", lastReceived: "2026-03-09", supplier: "Medtronic", status: "in-stock", supplyChain: "med-surg" },
+  { id: "INV-008", name: "Foley Catheter 16Fr", category: "Supplies", department: "Med/Surg", sku: "SUP-FOL-16F", currentStock: 420, parLevel: 600, reorderPoint: 240, unitCost: 4.50, lotNumber: "LT-2026-0267", expirationDate: "2027-12-31", lastReceived: "2026-03-07", supplier: "Teleflex", status: "low-stock", supplyChain: "med-surg" },
+  { id: "INV-009", name: "Fentanyl Citrate 100mcg/2mL", category: "Controlled Substance", department: "Pharmacy", sku: "RX-FEN-100", currentStock: 680, parLevel: 800, reorderPoint: 300, unitCost: 2.30, lotNumber: "LT-2026-0156", expirationDate: "2027-02-28", lastReceived: "2026-03-13", supplier: "Akorn", status: "in-stock", supplyChain: "pharmacy", gpoContract: "Vizient #CS-2025-042" },
+  { id: "INV-010", name: "Sterile Surgical Gown (L)", category: "PPE", department: "Operating Rooms", sku: "PPE-GWN-STR-L", currentStock: 1080, parLevel: 1600, reorderPoint: 800, unitCost: 6.75, lotNumber: "LT-2026-0378", expirationDate: null, lastReceived: "2026-03-06", supplier: "Halyard Health", status: "low-stock", supplyChain: "med-surg", gpoContract: "Vizient #MS-2025-441" },
+  { id: "INV-011", name: "Blood Collection Tubes (EDTA)", category: "Laboratory", department: "Laboratory", sku: "LAB-BCT-EDTA", currentStock: 17000, parLevel: 20000, reorderPoint: 10000, unitCost: 0.35, lotNumber: "LT-2026-0401", expirationDate: "2027-08-15", lastReceived: "2026-03-11", supplier: "BD Vacutainer", status: "in-stock", supplyChain: "lab", gpoContract: "Vizient #LB-2025-209" },
+  { id: "INV-012", name: "Oxytocin 10U/mL", category: "Medication", department: "Labor & Delivery", sku: "RX-OXY-10U", currentStock: 190, parLevel: 240, reorderPoint: 100, unitCost: 5.60, lotNumber: "LT-2026-0223", expirationDate: "2026-09-30", lastReceived: "2026-03-04", supplier: "Par Pharmaceutical", status: "in-stock", supplyChain: "pharmacy" },
+  { id: "INV-013", name: "Suture — Vicryl 3-0", category: "Surgical", department: "Operating Rooms", sku: "SRG-SUT-V30", currentStock: 30, parLevel: 400, reorderPoint: 160, unitCost: 9.80, lotNumber: "LT-2026-0489", expirationDate: "2028-06-30", lastReceived: "2026-02-20", supplier: "Ethicon (J&J)", status: "critical", supplyChain: "surgical", gpoContract: "Vizient #SG-2025-891" },
+  { id: "INV-014", name: "Rapid COVID-19 Antigen Test", category: "Testing", department: "Emergency Department", sku: "TST-COV-RAP", currentStock: 4200, parLevel: 6000, reorderPoint: 2000, unitCost: 5.25, lotNumber: "LT-2026-0567", expirationDate: "2026-04-30", lastReceived: "2026-03-01", supplier: "Abbott Diagnostics", status: "expiring-soon", supplyChain: "lab" },
+  { id: "INV-015", name: "Ventilator Circuit (Adult)", category: "Respiratory", department: "ICU", sku: "RSP-VCR-ADL", currentStock: 0, parLevel: 100, reorderPoint: 40, unitCost: 18.50, lotNumber: "LT-2026-0301", expirationDate: null, lastReceived: "2026-02-15", supplier: "Fisher & Paykel", status: "out-of-stock", supplyChain: "med-surg" },
 ];
 
 // Location-level stock breakdown — where exactly each item is stored
@@ -75,94 +80,99 @@ export type StockLocation = {
 
 export const itemLocations: Record<string, StockLocation[]> = {
   "INV-001": [ // Nitrile Gloves
-    { location: "Central Warehouse", floor: "B1", qty: 8000, storageType: "shelf" },
-    { location: "ED Supply Room", floor: "1st Floor", qty: 1200, storageType: "shelf" },
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 800, storageType: "shelf" },
-    { location: "OR Supply Core", floor: "2nd Floor", qty: 1400, storageType: "shelf" },
-    { location: "Med/Surg 4 East Supply", floor: "4th Floor", qty: 600, storageType: "shelf" },
-    { location: "L&D Supply Room", floor: "2nd Floor", qty: 400, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 12000, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 2400, storageType: "shelf" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 1600, storageType: "shelf" },
+    { location: "Parnassus OR Supply Core", floor: "Long 3rd Floor", qty: 2800, storageType: "shelf" },
+    { location: "Parnassus Med/Surg 14 Long", floor: "Long 14th Floor", qty: 1200, storageType: "shelf" },
+    { location: "Mission Bay L&D Supply", floor: "Mission Bay 4th Floor", qty: 800, storageType: "shelf" },
+    { location: "Mount Zion Supply Room", floor: "Mount Zion 2nd Floor", qty: 2000, storageType: "shelf" },
+    { location: "Benioff Oakland Supply", floor: "Oakland Main 3rd Floor", qty: 2000, storageType: "shelf" },
   ],
   "INV-002": [ // N95 Masks
-    { location: "Central Warehouse", floor: "B1", qty: 2000, storageType: "shelf" },
-    { location: "ED Supply Room", floor: "1st Floor", qty: 500, storageType: "shelf" },
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 300, storageType: "shelf" },
-    { location: "Respiratory Therapy Office", floor: "3rd Floor", qty: 200, storageType: "cabinet" },
-    { location: "Isolation Cart — 3 East", floor: "3rd Floor", qty: 200, storageType: "cart" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 3000, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 1000, storageType: "shelf" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 600, storageType: "shelf" },
+    { location: "Respiratory Therapy — Parnassus", floor: "Moffitt 8th Floor", qty: 400, storageType: "cabinet" },
+    { location: "Isolation Cart — Long 11th", floor: "Long 11th Floor", qty: 400, storageType: "cart" },
+    { location: "Mission Bay Supply Room", floor: "Mission Bay 2nd Floor", qty: 600, storageType: "shelf" },
+    { location: "Mount Zion Supply Room", floor: "Mount Zion 2nd Floor", qty: 400, storageType: "shelf" },
   ],
   "INV-003": [ // IV Catheter 20G
-    { location: "ED Supply Room", floor: "1st Floor", qty: 200, storageType: "shelf" },
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 100, storageType: "shelf" },
-    { location: "Med/Surg 4 East Supply", floor: "4th Floor", qty: 80, storageType: "shelf" },
-    { location: "Central Warehouse", floor: "B1", qty: 70, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 400, storageType: "shelf" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 200, storageType: "shelf" },
+    { location: "Parnassus Med/Surg 14 Long", floor: "Long 14th Floor", qty: 160, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 140, storageType: "shelf" },
   ],
   "INV-004": [ // Propofol
-    { location: "Pharmacy — Main", floor: "1st Floor", qty: 120, storageType: "refrigerator" },
-    { location: "OR Anesthesia Workroom", floor: "2nd Floor", qty: 40, storageType: "refrigerator" },
-    { location: "ICU Pyxis Station", floor: "3rd Floor", qty: 15, storageType: "pyxis" },
-    { location: "ED Pyxis Station", floor: "1st Floor", qty: 5, storageType: "pyxis" },
+    { location: "Pharmacy — Parnassus Main", floor: "Moffitt 1st Floor", qty: 240, storageType: "refrigerator" },
+    { location: "OR Anesthesia Workroom", floor: "Long 3rd Floor", qty: 80, storageType: "refrigerator" },
+    { location: "ICU Pyxis Station", floor: "Moffitt 8th Floor", qty: 30, storageType: "pyxis" },
+    { location: "ED Pyxis Station", floor: "Moffitt 1st Floor", qty: 10, storageType: "pyxis" },
   ],
   "INV-005": [ // Surgical Drape Kit — Total Knee
-    { location: "OR Supply Core", floor: "2nd Floor", qty: 55, storageType: "shelf" },
-    { location: "SPD — Sterile Processing", floor: "B1", qty: 20, storageType: "shelf" },
-    { location: "Central Warehouse", floor: "B1", qty: 10, storageType: "shelf" },
+    { location: "Parnassus OR Supply Core", floor: "Long 3rd Floor", qty: 110, storageType: "shelf" },
+    { location: "SPD — Sterile Processing", floor: "Basement", qty: 40, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 20, storageType: "shelf" },
   ],
   "INV-006": [ // Heparin
-    { location: "Pharmacy — Main", floor: "1st Floor", qty: 25, storageType: "shelf" },
-    { location: "ICU Pyxis Station", floor: "3rd Floor", qty: 8, storageType: "pyxis" },
-    { location: "ED Pyxis Station", floor: "1st Floor", qty: 7, storageType: "pyxis" },
-    { location: "Med/Surg Pyxis — 4 East", floor: "4th Floor", qty: 5, storageType: "pyxis" },
+    { location: "Pharmacy — Parnassus Main", floor: "Moffitt 1st Floor", qty: 50, storageType: "shelf" },
+    { location: "ICU Pyxis Station", floor: "Moffitt 8th Floor", qty: 16, storageType: "pyxis" },
+    { location: "ED Pyxis Station", floor: "Moffitt 1st Floor", qty: 14, storageType: "pyxis" },
+    { location: "Med/Surg Pyxis — Long 14th", floor: "Long 14th Floor", qty: 10, storageType: "pyxis" },
   ],
   "INV-007": [ // Endotracheal Tube 7.5mm
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 50, storageType: "cabinet" },
-    { location: "ED Supply Room", floor: "1st Floor", qty: 30, storageType: "cabinet" },
-    { location: "Central Warehouse", floor: "B1", qty: 25, storageType: "shelf" },
-    { location: "OR Anesthesia Workroom", floor: "2nd Floor", qty: 15, storageType: "cabinet" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 100, storageType: "cabinet" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 60, storageType: "cabinet" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 50, storageType: "shelf" },
+    { location: "OR Anesthesia Workroom", floor: "Long 3rd Floor", qty: 30, storageType: "cabinet" },
   ],
   "INV-008": [ // Foley Catheter 16Fr
-    { location: "Med/Surg 4 East Supply", floor: "4th Floor", qty: 80, storageType: "shelf" },
-    { location: "Med/Surg 3 East Supply", floor: "3rd Floor", qty: 50, storageType: "shelf" },
-    { location: "Central Warehouse", floor: "B1", qty: 40, storageType: "shelf" },
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 25, storageType: "shelf" },
-    { location: "ED Supply Room", floor: "1st Floor", qty: 15, storageType: "shelf" },
+    { location: "Parnassus Med/Surg 14 Long", floor: "Long 14th Floor", qty: 160, storageType: "shelf" },
+    { location: "Parnassus Med/Surg 11 Long", floor: "Long 11th Floor", qty: 100, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 80, storageType: "shelf" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 50, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 30, storageType: "shelf" },
   ],
   "INV-009": [ // Fentanyl (Controlled Substance)
-    { location: "Pharmacy — Controlled Substance Vault", floor: "1st Floor", qty: 200, storageType: "cage" },
-    { location: "OR Anesthesia Pyxis", floor: "2nd Floor", qty: 60, storageType: "pyxis" },
-    { location: "ICU Pyxis Station", floor: "3rd Floor", qty: 40, storageType: "pyxis" },
-    { location: "ED Pyxis Station", floor: "1st Floor", qty: 25, storageType: "pyxis" },
-    { location: "L&D Pyxis Station", floor: "2nd Floor", qty: 15, storageType: "pyxis" },
+    { location: "Pharmacy — Controlled Substance Vault", floor: "Moffitt 1st Floor", qty: 400, storageType: "cage" },
+    { location: "OR Anesthesia Pyxis", floor: "Long 3rd Floor", qty: 120, storageType: "pyxis" },
+    { location: "ICU Pyxis Station", floor: "Moffitt 8th Floor", qty: 80, storageType: "pyxis" },
+    { location: "ED Pyxis Station", floor: "Moffitt 1st Floor", qty: 50, storageType: "pyxis" },
+    { location: "Mission Bay L&D Pyxis", floor: "Mission Bay 4th Floor", qty: 30, storageType: "pyxis" },
   ],
   "INV-010": [ // Sterile Surgical Gown (L)
-    { location: "OR Supply Core", floor: "2nd Floor", qty: 250, storageType: "shelf" },
-    { location: "Central Warehouse", floor: "B1", qty: 150, storageType: "shelf" },
-    { location: "SPD — Sterile Processing", floor: "B1", qty: 80, storageType: "shelf" },
-    { location: "L&D Supply Room", floor: "2nd Floor", qty: 40, storageType: "shelf" },
-    { location: "ED Supply Room", floor: "1st Floor", qty: 20, storageType: "shelf" },
+    { location: "Parnassus OR Supply Core", floor: "Long 3rd Floor", qty: 500, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 300, storageType: "shelf" },
+    { location: "SPD — Sterile Processing", floor: "Basement", qty: 160, storageType: "shelf" },
+    { location: "Mission Bay L&D Supply", floor: "Mission Bay 4th Floor", qty: 80, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 40, storageType: "shelf" },
   ],
   "INV-011": [ // Blood Collection Tubes (EDTA)
-    { location: "Lab Supply Room", floor: "1st Floor", qty: 4000, storageType: "shelf" },
-    { location: "Lab — Blood Bank", floor: "1st Floor", qty: 2000, storageType: "shelf" },
-    { location: "Central Warehouse", floor: "B1", qty: 1500, storageType: "shelf" },
-    { location: "ED Supply Room", floor: "1st Floor", qty: 600, storageType: "shelf" },
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 400, storageType: "shelf" },
+    { location: "Lab Supply Room — Parnassus", floor: "Moffitt 1st Floor", qty: 8000, storageType: "shelf" },
+    { location: "Lab — Blood Bank", floor: "Moffitt 1st Floor", qty: 4000, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 3000, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 1200, storageType: "shelf" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 800, storageType: "shelf" },
   ],
   "INV-012": [ // Oxytocin
-    { location: "Pharmacy — Main", floor: "1st Floor", qty: 50, storageType: "refrigerator" },
-    { location: "L&D Pyxis Station", floor: "2nd Floor", qty: 30, storageType: "pyxis" },
-    { location: "L&D Medication Room", floor: "2nd Floor", qty: 15, storageType: "refrigerator" },
+    { location: "Pharmacy — Parnassus Main", floor: "Moffitt 1st Floor", qty: 80, storageType: "refrigerator" },
+    { location: "Mission Bay L&D Pyxis", floor: "Mission Bay 4th Floor", qty: 60, storageType: "pyxis" },
+    { location: "Mission Bay L&D Medication Room", floor: "Mission Bay 4th Floor", qty: 50, storageType: "refrigerator" },
   ],
   "INV-013": [ // Vicryl Sutures
-    { location: "OR Supply Core", floor: "2nd Floor", qty: 10, storageType: "cabinet" },
-    { location: "Central Warehouse", floor: "B1", qty: 5, storageType: "shelf" },
+    { location: "Parnassus OR Supply Core", floor: "Long 3rd Floor", qty: 20, storageType: "cabinet" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 10, storageType: "shelf" },
   ],
   "INV-014": [ // COVID Tests
-    { location: "ED Supply Room", floor: "1st Floor", qty: 800, storageType: "shelf" },
-    { location: "Central Warehouse", floor: "B1", qty: 1000, storageType: "shelf" },
-    { location: "Lab — Testing Area", floor: "1st Floor", qty: 300, storageType: "shelf" },
+    { location: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", qty: 1600, storageType: "shelf" },
+    { location: "Parnassus Central Warehouse", floor: "Basement", qty: 1500, storageType: "shelf" },
+    { location: "Lab — Testing Area", floor: "Moffitt 1st Floor", qty: 600, storageType: "shelf" },
+    { location: "Mission Bay Supply Room", floor: "Mission Bay 2nd Floor", qty: 500, storageType: "shelf" },
   ],
   "INV-015": [ // Ventilator Circuits (OUT OF STOCK)
-    { location: "ICU Supply Alcove", floor: "3rd Floor", qty: 0, storageType: "shelf" },
-    { location: "Respiratory Therapy Office", floor: "3rd Floor", qty: 0, storageType: "shelf" },
+    { location: "Parnassus ICU Supply Room", floor: "Moffitt 8th Floor", qty: 0, storageType: "shelf" },
+    { location: "Respiratory Therapy — Parnassus", floor: "Moffitt 8th Floor", qty: 0, storageType: "shelf" },
   ],
 };
 
@@ -241,14 +251,14 @@ export const demandForecastData = [
 ];
 
 export const departmentConsumption = [
-  { department: "ED", current: 2800, predicted: 3100, change: 10.7 },
-  { department: "OR", current: 2200, predicted: 2450, change: 11.4 },
-  { department: "Pharmacy", current: 3500, predicted: 3650, change: 4.3 },
-  { department: "ICU", current: 1800, predicted: 2100, change: 16.7 },
-  { department: "Materials Management", current: 5200, predicted: 5400, change: 3.8 },
-  { department: "Med/Surg", current: 1400, predicted: 1500, change: 7.1 },
-  { department: "L&D", current: 900, predicted: 950, change: 5.6 },
-  { department: "Lab", current: 2000, predicted: 2150, change: 7.5 },
+  { department: "ED", current: 5600, predicted: 6200, change: 10.7 },
+  { department: "OR", current: 4400, predicted: 4900, change: 11.4 },
+  { department: "Pharmacy", current: 7000, predicted: 7300, change: 4.3 },
+  { department: "ICU", current: 3600, predicted: 4200, change: 16.7 },
+  { department: "Materials Mgmt", current: 10400, predicted: 10800, change: 3.8 },
+  { department: "Med/Surg", current: 2800, predicted: 3000, change: 7.1 },
+  { department: "L&D", current: 1800, predicted: 1900, change: 5.6 },
+  { department: "Lab", current: 4000, predicted: 4300, change: 7.5 },
 ];
 
 // AI Alerts/Insights
@@ -270,7 +280,7 @@ export const aiInsights: AIInsight[] = [
     type: "outbreak",
     severity: "high",
     title: "Flu Surge Predicted — Bay Area",
-    description: "CDC ILINet data shows 34% week-over-week increase in influenza-like illness in Contra Costa County. Wastewater surveillance confirms rising viral load. Additionally, 30 flu vaccination appointments have been booked this month — a 3x increase over February — signaling heightened community awareness and demand. Model predicts 40-60% increase in ED respiratory visits within 7-10 days.",
+    description: "CDC ILINet data shows 34% week-over-week increase in influenza-like illness in San Francisco County. Wastewater surveillance confirms rising viral load. Additionally, 30 flu vaccination appointments have been booked this month — a 3x increase over February — signaling heightened community awareness and demand. Model predicts 40-60% increase in ED respiratory visits within 7-10 days.",
     timestamp: "2026-03-15T08:30:00",
     actionable: true,
     suggestedAction: "Pre-order additional flu vaccine doses (est. 50 units), Tamiflu (est. 200 units), rapid flu tests (est. 1,500 units), N95 masks (est. 3,000 units), and vaccination supplies (syringes, alcohol pads). Auto-adjust PAR levels for respiratory supplies.",
@@ -303,7 +313,7 @@ export const aiInsights: AIInsight[] = [
     type: "cost-saving",
     severity: "info",
     title: "Vendor Consolidation Opportunity",
-    description: "Analysis shows 3 separate vendors supplying similar-spec nitrile gloves across 4 locations at varying price points ($0.09–$0.15/unit). Consolidating to Medline's contract pricing would standardize at $0.10/unit.",
+    description: "Analysis shows 3 separate vendors supplying similar-spec nitrile gloves across 5 campuses at varying price points ($0.09–$0.15/unit). Consolidating to Medline's Vizient contract pricing would standardize at $0.10/unit.",
     timestamp: "2026-03-14T14:00:00",
     actionable: true,
     suggestedAction: "Initiate vendor consolidation review. Estimated annual savings: $23,400.",
@@ -328,28 +338,28 @@ export const aiInsights: AIInsight[] = [
     description: "2,100 rapid COVID-19 antigen tests (lot LT-2026-0567) expire April 30, 2026. Current consumption rate: ~45 tests/day. At this rate, approximately 1,075 tests will expire unused.",
     timestamp: "2026-03-13T16:00:00",
     actionable: true,
-    suggestedAction: "Explore redistribution to Health Center locations (Richmond, Pittsburg, Concord) or coordinate with County Public Health for community testing events.",
+    suggestedAction: "Explore redistribution to Mission Bay, Mount Zion, and Benioff campuses, or coordinate with SF Department of Public Health for community testing events.",
     impact: "Prevents $5,644 in waste from expired inventory",
   },
 ];
 
 // Analytics Data
 export const monthlyCostTrend = [
-  { month: "Oct", actual: 892000, budget: 900000 },
-  { month: "Nov", actual: 945000, budget: 900000 },
-  { month: "Dec", actual: 1020000, budget: 920000 },
-  { month: "Jan", actual: 878000, budget: 910000 },
-  { month: "Feb", actual: 934000, budget: 910000 },
-  { month: "Mar", actual: 856000, budget: 915000 },
+  { month: "Oct", actual: 2676000, budget: 2700000 },
+  { month: "Nov", actual: 2835000, budget: 2700000 },
+  { month: "Dec", actual: 3060000, budget: 2760000 },
+  { month: "Jan", actual: 2634000, budget: 2730000 },
+  { month: "Feb", actual: 2802000, budget: 2730000 },
+  { month: "Mar", actual: 2568000, budget: 2745000 },
 ];
 
 export const supplierPerformance = [
-  { name: "Medline Industries", onTimeRate: 96.2, fillRate: 98.5, avgLeadDays: 2.1, orders: 142, spend: 287000 },
-  { name: "Cardinal Health", onTimeRate: 93.8, fillRate: 97.2, avgLeadDays: 2.8, orders: 98, spend: 214000 },
-  { name: "BD Medical", onTimeRate: 91.5, fillRate: 95.8, avgLeadDays: 3.4, orders: 76, spend: 178000 },
-  { name: "McKesson", onTimeRate: 94.1, fillRate: 96.9, avgLeadDays: 2.3, orders: 120, spend: 342000 },
-  { name: "Pfizer", onTimeRate: 89.7, fillRate: 94.1, avgLeadDays: 5.2, orders: 34, spend: 156000 },
-  { name: "Medtronic", onTimeRate: 97.3, fillRate: 99.1, avgLeadDays: 4.1, orders: 28, spend: 412000 },
+  { name: "Medline Industries", onTimeRate: 96.2, fillRate: 98.5, avgLeadDays: 2.1, orders: 426, spend: 861000 },
+  { name: "Cardinal Health", onTimeRate: 93.8, fillRate: 97.2, avgLeadDays: 2.8, orders: 294, spend: 642000 },
+  { name: "BD Medical", onTimeRate: 91.5, fillRate: 95.8, avgLeadDays: 3.4, orders: 228, spend: 534000 },
+  { name: "McKesson", onTimeRate: 94.1, fillRate: 96.9, avgLeadDays: 2.3, orders: 360, spend: 1026000 },
+  { name: "Pfizer", onTimeRate: 89.7, fillRate: 94.1, avgLeadDays: 5.2, orders: 102, spend: 468000 },
+  { name: "Medtronic", onTimeRate: 97.3, fillRate: 99.1, avgLeadDays: 4.1, orders: 84, spend: 1236000 },
 ];
 
 export const inventoryTurnover = [
@@ -529,25 +539,25 @@ export const complianceFindings: ComplianceFinding[] = [
 
 // Annual budget allocation by category
 export const budgetAllocation = [
-  { category: "PPE & Safety", annualBudget: 1_420_000, ytdSpend: 642_000, ytdBudget: 592_000, forecast: 1_540_000 },
-  { category: "Medications (Non-Controlled)", annualBudget: 2_850_000, ytdSpend: 1_180_000, ytdBudget: 1_188_000, forecast: 2_830_000 },
-  { category: "Controlled Substances", annualBudget: 680_000, ytdSpend: 295_000, ytdBudget: 283_000, forecast: 710_000 },
-  { category: "Surgical Supplies", annualBudget: 3_200_000, ytdSpend: 1_380_000, ytdBudget: 1_333_000, forecast: 3_310_000 },
-  { category: "Laboratory Supplies", annualBudget: 890_000, ytdSpend: 365_000, ytdBudget: 371_000, forecast: 875_000 },
-  { category: "Respiratory / ICU", annualBudget: 720_000, ytdSpend: 312_000, ytdBudget: 300_000, forecast: 750_000 },
-  { category: "General Medical Supplies", annualBudget: 1_640_000, ytdSpend: 695_000, ytdBudget: 683_000, forecast: 1_660_000 },
+  { category: "PPE & Safety", annualBudget: 4_260_000, ytdSpend: 1_926_000, ytdBudget: 1_776_000, forecast: 4_620_000 },
+  { category: "Medications (Non-Controlled)", annualBudget: 8_550_000, ytdSpend: 3_540_000, ytdBudget: 3_564_000, forecast: 8_490_000 },
+  { category: "Controlled Substances", annualBudget: 2_040_000, ytdSpend: 885_000, ytdBudget: 849_000, forecast: 2_130_000 },
+  { category: "Surgical Supplies", annualBudget: 9_600_000, ytdSpend: 4_140_000, ytdBudget: 3_999_000, forecast: 9_930_000 },
+  { category: "Laboratory Supplies", annualBudget: 2_670_000, ytdSpend: 1_095_000, ytdBudget: 1_113_000, forecast: 2_625_000 },
+  { category: "Respiratory / ICU", annualBudget: 2_160_000, ytdSpend: 936_000, ytdBudget: 900_000, forecast: 2_250_000 },
+  { category: "General Medical Supplies", annualBudget: 4_920_000, ytdSpend: 2_085_000, ytdBudget: 2_049_000, forecast: 4_980_000 },
 ];
 
 // Current inventory valuation by department
 export const inventoryValuation = [
-  { department: "Materials Management", itemCount: 5623, totalValue: 487_200, avgDaysOnHand: 18.4 },
-  { department: "Pharmacy", itemCount: 3215, totalValue: 892_500, avgDaysOnHand: 12.1 },
-  { department: "Operating Rooms", itemCount: 2341, totalValue: 645_300, avgDaysOnHand: 8.7 },
-  { department: "Emergency Department", itemCount: 1847, totalValue: 234_100, avgDaysOnHand: 6.2 },
-  { department: "Laboratory", itemCount: 2109, totalValue: 178_400, avgDaysOnHand: 14.5 },
-  { department: "Intensive Care Unit", itemCount: 1456, totalValue: 312_700, avgDaysOnHand: 9.3 },
-  { department: "Med/Surg", itemCount: 1234, totalValue: 156_800, avgDaysOnHand: 11.6 },
-  { department: "Labor & Delivery", itemCount: 987, totalValue: 124_500, avgDaysOnHand: 15.2 },
+  { department: "Materials Management", itemCount: 11246, totalValue: 974_400, avgDaysOnHand: 18.4 },
+  { department: "Pharmacy", itemCount: 6430, totalValue: 1_785_000, avgDaysOnHand: 12.1 },
+  { department: "Operating Rooms", itemCount: 4872, totalValue: 1_290_600, avgDaysOnHand: 8.7 },
+  { department: "Emergency Department", itemCount: 3245, totalValue: 468_200, avgDaysOnHand: 6.2 },
+  { department: "Laboratory", itemCount: 4218, totalValue: 356_800, avgDaysOnHand: 14.5 },
+  { department: "Intensive Care Unit", itemCount: 2912, totalValue: 625_400, avgDaysOnHand: 9.3 },
+  { department: "Med/Surg", itemCount: 2468, totalValue: 313_600, avgDaysOnHand: 11.6 },
+  { department: "Labor & Delivery", itemCount: 1974, totalValue: 249_000, avgDaysOnHand: 15.2 },
 ];
 
 // Upcoming purchase orders (pending + AI-recommended)
@@ -652,15 +662,15 @@ export const upcomingPurchaseOrders: PurchaseOrder[] = [
 
 // Monthly spend forecast (historical + AI projected)
 export const monthlySpendForecast = [
-  { month: "Oct '25", actual: 892_000, budget: 900_000, forecast: null },
-  { month: "Nov '25", actual: 945_000, budget: 900_000, forecast: null },
-  { month: "Dec '25", actual: 1_020_000, budget: 920_000, forecast: null },
-  { month: "Jan '26", actual: 878_000, budget: 910_000, forecast: null },
-  { month: "Feb '26", actual: 934_000, budget: 910_000, forecast: null },
-  { month: "Mar '26", actual: 568_000, budget: 915_000, forecast: 895_000 },
-  { month: "Apr '26", actual: null, budget: 910_000, forecast: 942_000 },
-  { month: "May '26", actual: null, budget: 910_000, forecast: 918_000 },
-  { month: "Jun '26", actual: null, budget: 920_000, forecast: 965_000 },
+  { month: "Oct '25", actual: 2_676_000, budget: 2_700_000, forecast: null },
+  { month: "Nov '25", actual: 2_835_000, budget: 2_700_000, forecast: null },
+  { month: "Dec '25", actual: 3_060_000, budget: 2_760_000, forecast: null },
+  { month: "Jan '26", actual: 2_634_000, budget: 2_730_000, forecast: null },
+  { month: "Feb '26", actual: 2_802_000, budget: 2_730_000, forecast: null },
+  { month: "Mar '26", actual: 1_704_000, budget: 2_745_000, forecast: 2_685_000 },
+  { month: "Apr '26", actual: null, budget: 2_730_000, forecast: 2_826_000 },
+  { month: "May '26", actual: null, budget: 2_730_000, forecast: 2_754_000 },
+  { month: "Jun '26", actual: null, budget: 2_760_000, forecast: 2_895_000 },
 ];
 
 // Upcoming deliveries (shipments already in-transit or confirmed)
@@ -794,7 +804,7 @@ export const delayedShipments: DelayedShipment[] = [
       "Place emergency order with Baxter International (backup contract) — 2-day expedited delivery, est. $9,800 (+$1,050 premium)",
       "Contact Fresenius Kabi account rep for production timeline update",
       "Implement IV fluid conservation protocol — restrict non-critical IV hydration orders",
-      "Transfer 100 bags Normal Saline from Pittsburg Health Center (they have 30-day surplus)",
+      "Transfer 100 bags Normal Saline from Mount Zion campus (they have 30-day surplus)",
     ],
   },
   {
@@ -824,15 +834,15 @@ export const delayedShipments: DelayedShipment[] = [
 
 // Activity feed
 export const recentActivity = [
-  { time: "08:45 AM", action: "Stock received", detail: "450 units of IV Catheter 20G — received at Central Warehouse, distributed to ED Supply Room A & ICU Supply Alcove", user: "M. Rodriguez" },
+  { time: "08:45 AM", action: "Stock received", detail: "900 units of IV Catheter 20G — received at Parnassus Central Warehouse, distributed to ED Supply Room & Moffitt ICU", user: "M. Rodriguez" },
   { time: "08:30 AM", action: "AI Alert", detail: "Flu surge prediction — Bay Area outbreak intelligence", user: "System" },
   { time: "08:15 AM", action: "PM completed", detail: "Defibrillator LIFEPAK 20e — ED", user: "J. Chen" },
   { time: "07:50 AM", action: "Low stock alert", detail: "Vicryl 3-0 Sutures below reorder point — OR", user: "System" },
-  { time: "07:30 AM", action: "Transfer completed", detail: "200 N95 Masks: Central Warehouse → ED Supply Room A", user: "K. Patel" },
+  { time: "07:30 AM", action: "Transfer completed", detail: "400 N95 Masks: Parnassus Warehouse → ED Supply Room & Mission Bay", user: "K. Patel" },
   { time: "07:00 AM", action: "Compliance scan", detail: "Daily TJC readiness check completed — Score: 88%", user: "System" },
   { time: "06:30 AM", action: "PO generated", detail: "Auto-generated PO #4521 for Heparin Sodium — Pfizer", user: "System" },
   { time: "06:00 AM", action: "Expiration alert", detail: "Propofol 200mg — 180 units expiring Jun 15, 2026", user: "System" },
-  { time: "05:45 AM", action: "Pyxis replenishment", detail: "Pyxis replenishment completed — ICU Pyxis MedStation #3, L&D Pyxis MedStation #5", user: "R. Nguyen" },
+  { time: "05:45 AM", action: "Pyxis replenishment", detail: "Pyxis replenishment completed — Moffitt ICU Pyxis #3, Mission Bay L&D Pyxis", user: "R. Nguyen" },
 ];
 
 // ============================================================
@@ -856,26 +866,45 @@ export type ParLocation = {
 };
 
 export const parLocations: ParLocation[] = [
-  { id: "PAR-001", name: "Central Warehouse", floor: "B1", department: "Materials Management", locationType: "warehouse", managedBy: "Materials Management", restockCycle: "weekly", lastRestocked: "2026-03-15T06:00:00", itemCount: 2847, fillRate: 94, status: "normal", supplyChain: "mixed" },
-  { id: "PAR-002", name: "ED Supply Room A", floor: "1st Floor", department: "Emergency Department", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:15:00", itemCount: 312, fillRate: 87, status: "normal", supplyChain: "med-surg" },
-  { id: "PAR-003", name: "ED Pyxis MedStation #1", floor: "1st Floor", department: "Emergency Department", locationType: "adc", adcModel: "Pyxis MedStation ES", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:30:00", itemCount: 142, fillRate: 78, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-004", name: "ED Trauma Bay Supply", floor: "1st Floor", department: "Emergency Department", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "shift-change", lastRestocked: "2026-03-16T07:00:00", itemCount: 85, fillRate: 91, status: "normal", supplyChain: "med-surg" },
-  { id: "PAR-005", name: "ICU Supply Alcove", floor: "3rd Floor", department: "Intensive Care Unit", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-15T14:30:00", itemCount: 245, fillRate: 72, status: "low", supplyChain: "med-surg" },
-  { id: "PAR-006", name: "ICU Pyxis MedStation #3", floor: "3rd Floor", department: "Intensive Care Unit", locationType: "adc", adcModel: "Pyxis MedStation ES", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:45:00", itemCount: 168, fillRate: 81, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-007", name: "OR Supply Core", floor: "2nd Floor", department: "Operating Rooms", locationType: "sterile-core", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-15T16:00:00", itemCount: 891, fillRate: 79, status: "low", supplyChain: "surgical" },
-  { id: "PAR-008", name: "OR Anesthesia Cart - Room 4", floor: "2nd Floor", department: "Operating Rooms", locationType: "cart", managedBy: "Pharmacy", restockCycle: "shift-change", lastRestocked: "2026-03-15T19:00:00", itemCount: 48, fillRate: 65, status: "critical", supplyChain: "pharmacy" },
-  { id: "PAR-009", name: "Med/Surg 3 East Supply", floor: "3rd Floor", department: "Med/Surg", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:30:00", itemCount: 198, fillRate: 106, status: "overstocked", supplyChain: "med-surg" },
-  { id: "PAR-010", name: "Med/Surg 4 East Supply", floor: "4th Floor", department: "Med/Surg", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:45:00", itemCount: 204, fillRate: 82, status: "normal", supplyChain: "med-surg" },
-  { id: "PAR-011", name: "Med/Surg 4E Omnicell #1", floor: "4th Floor", department: "Med/Surg", locationType: "adc", adcModel: "Omnicell XT", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:50:00", itemCount: 134, fillRate: 88, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-012", name: "L&D Supply Room", floor: "2nd Floor", department: "Labor & Delivery", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:20:00", itemCount: 156, fillRate: 93, status: "normal", supplyChain: "med-surg" },
-  { id: "PAR-013", name: "L&D Pyxis MedStation #5", floor: "2nd Floor", department: "Labor & Delivery", locationType: "adc", adcModel: "Pyxis MedStation ES", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:40:00", itemCount: 98, fillRate: 85, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-014", name: "Pharmacy Main", floor: "1st Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "as-needed", lastRestocked: "2026-03-15T22:00:00", itemCount: 1245, fillRate: 91, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-015", name: "Pharmacy - Controlled Substance Vault", floor: "1st Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "as-needed", lastRestocked: "2026-03-15T20:00:00", itemCount: 87, fillRate: 95, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-016", name: "Satellite Pharmacy - ICU", floor: "3rd Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "daily", lastRestocked: "2026-03-16T06:00:00", itemCount: 234, fillRate: 83, status: "normal", supplyChain: "pharmacy" },
-  { id: "PAR-017", name: "Lab Supply Room", floor: "1st Floor", department: "Laboratory", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "weekly", lastRestocked: "2026-03-15T10:00:00", itemCount: 367, fillRate: 96, status: "normal", supplyChain: "lab" },
-  { id: "PAR-018", name: "Lab - Blood Bank", floor: "1st Floor", department: "Laboratory", locationType: "supply-room", managedBy: "Laboratory", restockCycle: "weekly", lastRestocked: "2026-03-15T10:30:00", itemCount: 145, fillRate: 92, status: "normal", supplyChain: "lab" },
-  { id: "PAR-019", name: "SPD - Sterile Processing", floor: "B1", department: "Materials Management", locationType: "sterile-core", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T05:00:00", itemCount: 423, fillRate: 88, status: "normal", supplyChain: "surgical" },
-  { id: "PAR-020", name: "Isolation Cart - 3 East", floor: "3rd Floor", department: "Med/Surg", locationType: "cart", managedBy: "Materials Management", restockCycle: "shift-change", lastRestocked: "2026-03-15T19:00:00", itemCount: 34, fillRate: 45, status: "critical", supplyChain: "med-surg" },
+  // === Parnassus Heights Campus (Moffitt-Long) — ~80 PAR locations ===
+  { id: "PAR-001", name: "Parnassus Central Warehouse", floor: "Basement", department: "Materials Management", locationType: "warehouse", managedBy: "Materials Management", restockCycle: "weekly", lastRestocked: "2026-03-15T06:00:00", itemCount: 5694, fillRate: 94, status: "normal", supplyChain: "mixed" },
+  { id: "PAR-002", name: "Parnassus ED Supply Room", floor: "Moffitt 1st Floor", department: "Emergency Department", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:15:00", itemCount: 624, fillRate: 87, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-003", name: "ED Pyxis MedStation #1", floor: "Moffitt 1st Floor", department: "Emergency Department", locationType: "adc", adcModel: "Pyxis MedStation ES", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:30:00", itemCount: 284, fillRate: 78, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-004", name: "ED Trauma Bay Supply", floor: "Moffitt 1st Floor", department: "Emergency Department", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "shift-change", lastRestocked: "2026-03-16T07:00:00", itemCount: 170, fillRate: 91, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-005", name: "Moffitt ICU Supply Room", floor: "Moffitt 8th Floor", department: "Intensive Care Unit", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-15T14:30:00", itemCount: 490, fillRate: 72, status: "low", supplyChain: "med-surg" },
+  { id: "PAR-006", name: "ICU Pyxis MedStation #3", floor: "Moffitt 8th Floor", department: "Intensive Care Unit", locationType: "adc", adcModel: "Pyxis MedStation ES", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:45:00", itemCount: 336, fillRate: 81, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-007", name: "Parnassus OR Supply Core", floor: "Long 3rd Floor", department: "Operating Rooms", locationType: "sterile-core", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-15T16:00:00", itemCount: 1782, fillRate: 79, status: "low", supplyChain: "surgical" },
+  { id: "PAR-008", name: "OR Anesthesia Cart — Room 4", floor: "Long 3rd Floor", department: "Operating Rooms", locationType: "cart", managedBy: "Pharmacy", restockCycle: "shift-change", lastRestocked: "2026-03-15T19:00:00", itemCount: 96, fillRate: 65, status: "critical", supplyChain: "pharmacy" },
+  { id: "PAR-009", name: "Med/Surg Long 11th Supply", floor: "Long 11th Floor", department: "Med/Surg", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:30:00", itemCount: 396, fillRate: 106, status: "overstocked", supplyChain: "med-surg" },
+  { id: "PAR-010", name: "Med/Surg Long 14th Supply", floor: "Long 14th Floor", department: "Med/Surg", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:45:00", itemCount: 408, fillRate: 82, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-011", name: "Med/Surg Long 14th Omnicell", floor: "Long 14th Floor", department: "Med/Surg", locationType: "adc", adcModel: "Omnicell XT", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:50:00", itemCount: 268, fillRate: 88, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-012", name: "Pharmacy — Parnassus Main", floor: "Moffitt 1st Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "as-needed", lastRestocked: "2026-03-15T22:00:00", itemCount: 2490, fillRate: 91, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-013", name: "Pharmacy — Controlled Substance Vault", floor: "Moffitt 1st Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "as-needed", lastRestocked: "2026-03-15T20:00:00", itemCount: 174, fillRate: 95, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-014", name: "Satellite Pharmacy — Moffitt ICU", floor: "Moffitt 8th Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "daily", lastRestocked: "2026-03-16T06:00:00", itemCount: 468, fillRate: 83, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-015", name: "Lab Supply Room — Parnassus", floor: "Moffitt 1st Floor", department: "Laboratory", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "weekly", lastRestocked: "2026-03-15T10:00:00", itemCount: 734, fillRate: 96, status: "normal", supplyChain: "lab" },
+  { id: "PAR-016", name: "Lab — Blood Bank", floor: "Moffitt 1st Floor", department: "Laboratory", locationType: "supply-room", managedBy: "Laboratory", restockCycle: "weekly", lastRestocked: "2026-03-15T10:30:00", itemCount: 290, fillRate: 92, status: "normal", supplyChain: "lab" },
+  { id: "PAR-017", name: "SPD — Sterile Processing", floor: "Basement", department: "Materials Management", locationType: "sterile-core", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T05:00:00", itemCount: 846, fillRate: 88, status: "normal", supplyChain: "surgical" },
+  { id: "PAR-018", name: "Isolation Cart — Long 11th", floor: "Long 11th Floor", department: "Med/Surg", locationType: "cart", managedBy: "Materials Management", restockCycle: "shift-change", lastRestocked: "2026-03-15T19:00:00", itemCount: 68, fillRate: 45, status: "critical", supplyChain: "med-surg" },
+  { id: "PAR-019", name: "Transplant Supply Room", floor: "Long 15th Floor", department: "Transplant Services", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:10:00", itemCount: 312, fillRate: 89, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-020", name: "Neuro ICU Supply Room", floor: "Moffitt 7th Floor", department: "Neurosciences", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:05:00", itemCount: 278, fillRate: 84, status: "normal", supplyChain: "med-surg" },
+
+  // === Mission Bay Campus — ~35 PAR locations ===
+  { id: "PAR-021", name: "Mission Bay L&D Supply Room", floor: "Mission Bay 4th Floor", department: "Labor & Delivery", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:20:00", itemCount: 312, fillRate: 93, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-022", name: "Mission Bay L&D Pyxis", floor: "Mission Bay 4th Floor", department: "Labor & Delivery", locationType: "adc", adcModel: "Pyxis MedStation ES", managedBy: "Pharmacy", restockCycle: "twice-daily", lastRestocked: "2026-03-16T05:40:00", itemCount: 196, fillRate: 85, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-023", name: "Mission Bay NICU Supply", floor: "Mission Bay 3rd Floor", department: "Intensive Care Unit", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:25:00", itemCount: 345, fillRate: 91, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-024", name: "Mission Bay Central Supply", floor: "Mission Bay 1st Floor", department: "Materials Management", locationType: "warehouse", managedBy: "Materials Management", restockCycle: "weekly", lastRestocked: "2026-03-15T07:00:00", itemCount: 1842, fillRate: 90, status: "normal", supplyChain: "mixed" },
+  { id: "PAR-025", name: "Benioff SF Pharmacy", floor: "Mission Bay 2nd Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "daily", lastRestocked: "2026-03-16T06:00:00", itemCount: 856, fillRate: 87, status: "normal", supplyChain: "pharmacy" },
+  { id: "PAR-026", name: "Mission Bay Oncology Supply", floor: "Mission Bay 5th Floor", department: "Oncology / Cancer Center", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:30:00", itemCount: 267, fillRate: 92, status: "normal", supplyChain: "med-surg" },
+
+  // === Mount Zion Campus — ~18 PAR locations ===
+  { id: "PAR-027", name: "Mount Zion Supply Room", floor: "Mount Zion 2nd Floor", department: "Materials Management", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:15:00", itemCount: 423, fillRate: 88, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-028", name: "Mount Zion OR Supply Core", floor: "Mount Zion 3rd Floor", department: "Operating Rooms", locationType: "sterile-core", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T05:45:00", itemCount: 612, fillRate: 82, status: "normal", supplyChain: "surgical" },
+  { id: "PAR-029", name: "Mount Zion Pharmacy", floor: "Mount Zion 1st Floor", department: "Pharmacy", locationType: "satellite-pharmacy", managedBy: "Pharmacy", restockCycle: "daily", lastRestocked: "2026-03-16T06:00:00", itemCount: 534, fillRate: 90, status: "normal", supplyChain: "pharmacy" },
+
+  // === Benioff Children's Oakland — ~15 PAR locations ===
+  { id: "PAR-030", name: "Oakland Central Supply", floor: "Oakland Main 1st Floor", department: "Materials Management", locationType: "warehouse", managedBy: "Materials Management", restockCycle: "weekly", lastRestocked: "2026-03-15T06:30:00", itemCount: 1456, fillRate: 91, status: "normal", supplyChain: "mixed" },
+  { id: "PAR-031", name: "Oakland Pediatric ICU Supply", floor: "Oakland Main 4th Floor", department: "Intensive Care Unit", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:10:00", itemCount: 287, fillRate: 86, status: "normal", supplyChain: "med-surg" },
+  { id: "PAR-032", name: "Oakland ED Supply Room", floor: "Oakland Main 1st Floor", department: "Emergency Department", locationType: "supply-room", managedBy: "Materials Management", restockCycle: "daily", lastRestocked: "2026-03-16T06:20:00", itemCount: 345, fillRate: 83, status: "normal", supplyChain: "med-surg" },
 ];
 
 // ============================================================
@@ -1031,44 +1060,44 @@ export const locationImbalances: LocationImbalance[] = [
     itemId: "INV-001",
     itemName: "Nitrile Examination Gloves (M)",
     locations: [
-      { locationName: "Med/Surg 3 East Supply", currentQty: 1800, parLevel: 1000, pctOfPar: 180, status: "overstocked" },
-      { locationName: "ICU Supply Alcove", currentQty: 336, parLevel: 800, pctOfPar: 42, status: "critical" },
-      { locationName: "ED Supply Room A", currentQty: 1200, parLevel: 1200, pctOfPar: 100, status: "at-par" },
-      { locationName: "Central Warehouse", currentQty: 8000, parLevel: 9000, pctOfPar: 89, status: "below-par" },
+      { locationName: "Med/Surg Long 11th Supply", currentQty: 3600, parLevel: 2000, pctOfPar: 180, status: "overstocked" },
+      { locationName: "Moffitt ICU Supply Room", currentQty: 672, parLevel: 1600, pctOfPar: 42, status: "critical" },
+      { locationName: "Parnassus ED Supply Room", currentQty: 2400, parLevel: 2400, pctOfPar: 100, status: "at-par" },
+      { locationName: "Parnassus Central Warehouse", currentQty: 12000, parLevel: 14000, pctOfPar: 86, status: "below-par" },
     ],
-    suggestedTransfer: { from: "Med/Surg 3 East Supply", to: "ICU Supply Alcove", qty: 400, reason: "ICU at 42% of PAR while Med/Surg 3E is overstocked at 180% — likely hoarding after flu surge alert" },
+    suggestedTransfer: { from: "Med/Surg Long 11th Supply", to: "Moffitt ICU Supply Room", qty: 800, reason: "ICU at 42% of PAR while Med/Surg Long 11th is overstocked at 180% — likely hoarding after flu surge alert" },
   },
   {
     itemId: "INV-006",
     itemName: "Heparin Sodium 5000U/mL",
     locations: [
-      { locationName: "Pharmacy Main", currentQty: 25, parLevel: 60, pctOfPar: 42, status: "below-par" },
-      { locationName: "ICU Pyxis MedStation #3", currentQty: 8, parLevel: 20, pctOfPar: 40, status: "critical" },
-      { locationName: "Med/Surg 4E Omnicell #1", currentQty: 5, parLevel: 15, pctOfPar: 33, status: "critical" },
-      { locationName: "ED Pyxis MedStation #1", currentQty: 7, parLevel: 15, pctOfPar: 47, status: "below-par" },
+      { locationName: "Pharmacy — Parnassus Main", currentQty: 50, parLevel: 120, pctOfPar: 42, status: "below-par" },
+      { locationName: "ICU Pyxis MedStation #3", currentQty: 16, parLevel: 40, pctOfPar: 40, status: "critical" },
+      { locationName: "Med/Surg Long 14th Omnicell", currentQty: 10, parLevel: 30, pctOfPar: 33, status: "critical" },
+      { locationName: "ED Pyxis MedStation #1", currentQty: 14, parLevel: 30, pctOfPar: 47, status: "below-par" },
     ],
-    suggestedTransfer: { from: "Pharmacy Main", to: "ICU Pyxis MedStation #3", qty: 12, reason: "ICU Pyxis below ADC par of 20 — redistribute from Pharmacy pending PO-4521 arrival (ETA Mar 20)" },
+    suggestedTransfer: { from: "Pharmacy — Parnassus Main", to: "ICU Pyxis MedStation #3", qty: 24, reason: "ICU Pyxis below ADC par of 40 — redistribute from Pharmacy pending PO-4521 arrival (ETA Mar 20)" },
   },
   {
     itemId: "INV-002",
     itemName: "N95 Respirator Masks",
     locations: [
-      { locationName: "ED Supply Room A", currentQty: 500, parLevel: 500, pctOfPar: 100, status: "at-par" },
-      { locationName: "Isolation Cart - 3 East", currentQty: 18, parLevel: 40, pctOfPar: 45, status: "critical" },
-      { locationName: "Central Warehouse", currentQty: 2000, parLevel: 2500, pctOfPar: 80, status: "below-par" },
-      { locationName: "ICU Supply Alcove", currentQty: 300, parLevel: 350, pctOfPar: 86, status: "below-par" },
+      { locationName: "Parnassus ED Supply Room", currentQty: 1000, parLevel: 1000, pctOfPar: 100, status: "at-par" },
+      { locationName: "Isolation Cart — Long 11th", currentQty: 36, parLevel: 80, pctOfPar: 45, status: "critical" },
+      { locationName: "Parnassus Central Warehouse", currentQty: 3000, parLevel: 4000, pctOfPar: 75, status: "below-par" },
+      { locationName: "Moffitt ICU Supply Room", currentQty: 600, parLevel: 700, pctOfPar: 86, status: "below-par" },
     ],
-    suggestedTransfer: { from: "ED Supply Room A", to: "Isolation Cart - 3 East", qty: 20, reason: "Isolation Cart at 45% of PAR — compliance finding FND-005 requires 48-hour coverage. Transfer 20 from ED (at full PAR) to close gap" },
+    suggestedTransfer: { from: "Parnassus ED Supply Room", to: "Isolation Cart — Long 11th", qty: 40, reason: "Isolation Cart at 45% of PAR — compliance finding FND-005 requires 48-hour coverage. Transfer 40 from ED (at full PAR) to close gap" },
   },
   {
     itemId: "INV-004",
     itemName: "Propofol 200mg/20mL",
     locations: [
-      { locationName: "OR Anesthesia Cart - Room 4", currentQty: 40, parLevel: 20, pctOfPar: 200, status: "overstocked" },
-      { locationName: "ED Pyxis MedStation #1", currentQty: 5, parLevel: 20, pctOfPar: 25, status: "critical" },
-      { locationName: "Pharmacy Main", currentQty: 120, parLevel: 120, pctOfPar: 100, status: "at-par" },
-      { locationName: "ICU Pyxis MedStation #3", currentQty: 15, parLevel: 20, pctOfPar: 75, status: "below-par" },
+      { locationName: "OR Anesthesia Cart — Room 4", currentQty: 80, parLevel: 40, pctOfPar: 200, status: "overstocked" },
+      { locationName: "ED Pyxis MedStation #1", currentQty: 10, parLevel: 40, pctOfPar: 25, status: "critical" },
+      { locationName: "Pharmacy — Parnassus Main", currentQty: 240, parLevel: 240, pctOfPar: 100, status: "at-par" },
+      { locationName: "ICU Pyxis MedStation #3", currentQty: 30, parLevel: 40, pctOfPar: 75, status: "below-par" },
     ],
-    suggestedTransfer: { from: "OR Anesthesia Cart - Room 4", to: "ED Pyxis MedStation #1", qty: 10, reason: "OR Anesthesia at 200% of typical par while ED Pyxis critically low at 25% — rebalance to avoid ED procedural sedation delays" },
+    suggestedTransfer: { from: "OR Anesthesia Cart — Room 4", to: "ED Pyxis MedStation #1", qty: 20, reason: "OR Anesthesia at 200% of typical par while ED Pyxis critically low at 25% — rebalance to avoid ED procedural sedation delays" },
   },
 ];

@@ -49,7 +49,7 @@ import Link from "next/link";
 const metrics = [
   {
     label: "Total SKUs Tracked",
-    value: "18,812",
+    value: "41,333",
     change: "+124 this month",
     trend: "up" as const,
     icon: Package,
@@ -57,8 +57,8 @@ const metrics = [
   },
   {
     label: "PAR Locations",
-    value: "62",
-    change: "across 4 facilities",
+    value: "148",
+    change: "across 5 campuses",
     trend: "neutral" as const,
     icon: MapPin,
     color: "bg-primary/10 text-primary",
@@ -73,7 +73,7 @@ const metrics = [
   },
   {
     label: "Monthly Spend",
-    value: "$856K",
+    value: "$2.57M",
     change: "-6.5% vs budget",
     trend: "up" as const,
     icon: CircleDollarSign,
@@ -150,7 +150,7 @@ export default function Dashboard() {
     <div className="min-h-screen">
       <Header
         title="Operations Dashboard"
-        subtitle="Contra Costa Regional Medical Center — Real-time supply chain status"
+        subtitle="UCSF Medical Center at Parnassus Heights — Real-time supply chain status"
       />
 
       <div className="p-8 space-y-6">
@@ -179,10 +179,10 @@ export default function Dashboard() {
         {/* Supply Chain Status */}
         <div className="grid grid-cols-4 gap-4">
           {[
-            { chain: "Med/Surg", fill: 91, locations: 8, status: "normal" },
-            { chain: "Pharmacy & ADC", fill: 84, locations: 7, status: "low" },
-            { chain: "Surgical / OR", fill: 76, locations: 3, status: "critical" },
-            { chain: "Laboratory", fill: 96, locations: 2, status: "normal" },
+            { chain: "Med/Surg", fill: 91, locations: 42, status: "normal" },
+            { chain: "Pharmacy & ADC", fill: 84, locations: 38, status: "low" },
+            { chain: "Surgical / OR", fill: 76, locations: 18, status: "critical" },
+            { chain: "Laboratory", fill: 96, locations: 12, status: "normal" },
           ].map((sc) => (
             <div key={sc.chain} className="bg-white rounded-xl border border-border p-4 flex items-center gap-3">
               <div className={cn("w-3 h-3 rounded-full shrink-0", sc.status === "normal" ? "bg-accent" : sc.status === "low" ? "bg-amber-400" : "bg-red-500")} />
