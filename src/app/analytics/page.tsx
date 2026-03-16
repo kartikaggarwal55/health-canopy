@@ -53,9 +53,9 @@ const wasteData = [
 ];
 
 const kpiCards = [
-  { label: "Total Monthly Spend", value: "$856K", change: "-6.5%", trend: "down" as const, detail: "vs. $915K budget", icon: DollarSign, color: "bg-emerald-50 text-emerald-600" },
-  { label: "Inventory Turnover", value: "12.8x", change: "+0.6", trend: "up" as const, detail: "Annual average", icon: RotateCcw, color: "bg-orange-50 text-orange-700", tooltip: "How many times inventory cycles through per year — higher means more efficient use of capital" },
-  { label: "Avg Lead Time", value: "3.2 days", change: "-0.4", trend: "up" as const, detail: "Across all vendors", icon: Clock, color: "bg-rose-50 text-rose-600" },
+  { label: "Total Monthly Spend", value: "$856K", change: "-6.5%", trend: "down" as const, detail: "vs. $915K budget", icon: DollarSign, color: "bg-accent/10 text-accent" },
+  { label: "Inventory Turnover", value: "12.8x", change: "+0.6", trend: "up" as const, detail: "Annual average", icon: RotateCcw, color: "bg-primary/10 text-primary", tooltip: "How many times inventory cycles through per year — higher means more efficient use of capital" },
+  { label: "Avg Lead Time", value: "3.2 days", change: "-0.4", trend: "up" as const, detail: "Across all vendors", icon: Clock, color: "bg-primary/10 text-primary" },
   { label: "Fill Rate", value: "96.8%", change: "+1.2%", trend: "up" as const, detail: "Last 30 days", icon: Target, color: "bg-amber-50 text-amber-600", tooltip: "Percentage of orders delivered complete on first shipment" },
   { label: "Waste & Expiration", value: "$90K", change: "-12%", trend: "up" as const, detail: "YTD savings vs. prior", icon: TrendingDown, color: "bg-red-50 text-red-600" },
   { label: "Active Vendors", value: "24", change: "3 underperforming", trend: "neutral" as const, detail: "", icon: Truck, color: "bg-stone-50 text-stone-600" },
@@ -126,7 +126,7 @@ export default function AnalyticsPage() {
                 {kpi.trend !== "neutral" && (
                   <div className={cn(
                     "flex items-center gap-0.5 text-[11px] font-semibold",
-                    kpi.trend === "up" ? "text-emerald-600" : "text-red-600"
+                    kpi.trend === "up" ? "text-accent" : "text-red-600"
                   )}>
                     {kpi.trend === "up" ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                     {kpi.change}
@@ -204,7 +204,7 @@ export default function AnalyticsPage() {
                   <span className="text-xs text-foreground w-36 shrink-0">{item.category}</span>
                   <div className="flex-1 h-3 bg-stone-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-rose-400 to-rose-500"
+                      className="h-full rounded-full bg-gradient-to-r from-red-400 to-red-500"
                       style={{ width: `${item.pct}%` }}
                     />
                   </div>
@@ -215,11 +215,11 @@ export default function AnalyticsPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 p-3 rounded-lg bg-emerald-50 border border-emerald-200">
-              <p className="text-xs text-emerald-700">
+            <div className="mt-4 p-3 rounded-lg bg-accent/10 border border-accent/20">
+              <p className="text-xs text-accent">
                 <span className="font-semibold">AI Recommendation:</span>{" "}
                 <InfoTooltip content="First Expired, First Out — prioritize items closest to expiry">
-                  <span className="cursor-help border-b border-dotted border-emerald-400">FEFO</span>
+                  <span className="cursor-help border-b border-dotted border-accent/40">FEFO</span>
                 </InfoTooltip>{" "}
                 enforcement on 12 medication SKUs could reduce expiration waste by $18,200/year.
               </p>
@@ -263,7 +263,7 @@ export default function AnalyticsPage() {
                     <td className="px-4 py-3">
                       <span className={cn(
                         "text-xs font-semibold",
-                        s.onTimeRate >= 95 ? "text-emerald-600" : s.onTimeRate >= 90 ? "text-amber-600" : "text-red-600"
+                        s.onTimeRate >= 95 ? "text-accent" : s.onTimeRate >= 90 ? "text-amber-600" : "text-red-600"
                       )}>
                         {s.onTimeRate}%
                       </span>
@@ -271,7 +271,7 @@ export default function AnalyticsPage() {
                     <td className="px-4 py-3">
                       <span className={cn(
                         "text-xs font-semibold",
-                        s.fillRate >= 97 ? "text-emerald-600" : s.fillRate >= 95 ? "text-amber-600" : "text-red-600"
+                        s.fillRate >= 97 ? "text-accent" : s.fillRate >= 95 ? "text-amber-600" : "text-red-600"
                       )}>
                         {s.fillRate}%
                       </span>
@@ -311,8 +311,8 @@ export default function AnalyticsPage() {
                 </RadarChart>
               </ResponsiveContainer>
             </div>
-            <div className="mt-2 p-3 rounded-lg bg-orange-50 border border-orange-200">
-              <p className="text-xs text-orange-700">
+            <div className="mt-2 p-3 rounded-lg bg-amber-50 border border-amber-200">
+              <p className="text-xs text-amber-700">
                 <span className="font-semibold">Insight:</span> OR turnover (8.7x) is 13% below benchmark. Review PAR levels and preference card accuracy to reduce excess.
               </p>
             </div>

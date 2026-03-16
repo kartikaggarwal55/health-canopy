@@ -100,7 +100,7 @@ export default function ForecastingPage() {
 
           <div className="flex items-center gap-6 mb-4 text-[11px]">
             <div className="flex items-center gap-2"><div className="w-8 h-0.5 rounded bg-primary" /><span className="text-foreground font-medium">Actual (past)</span></div>
-            <div className="flex items-center gap-2"><div className="w-8 h-0.5 rounded bg-accent" style={{ borderTop: "2px dashed #6b8f71", height: 0 }} /><span className="text-foreground font-medium">AI forecast (future)</span></div>
+            <div className="flex items-center gap-2"><div className="w-8 h-0.5 rounded bg-accent" style={{ borderTop: "2px dashed #4a7a52", height: 0 }} /><span className="text-foreground font-medium">AI forecast (future)</span></div>
             <div className="flex items-center gap-2"><div className="w-8 h-3 rounded bg-accent/10" /><span className="text-foreground font-medium">90% confidence range</span></div>
           </div>
 
@@ -115,9 +115,9 @@ export default function ForecastingPage() {
                   return [value ? `${Number(value).toLocaleString()} items` : "—", labels[name as string] || name];
                 }} />
                 <ReferenceLine x="Mar 15" stroke="#c44840" strokeDasharray="4 4" label={{ value: "Today", position: "top", fontSize: 10, fill: "#c44840" }} />
-                <Area type="monotone" dataKey="upper" stackId="band" stroke="none" fill="#6b8f71" fillOpacity={0.08} />
+                <Area type="monotone" dataKey="upper" stackId="band" stroke="none" fill="#4a7a52" fillOpacity={0.08} />
                 <Area type="monotone" dataKey="lower" stackId="band" stroke="none" fill="#ffffff" fillOpacity={1} />
-                <Line type="monotone" dataKey="predicted" stroke="#6b8f71" strokeWidth={2} strokeDasharray="6 3" dot={false} name="predicted" />
+                <Line type="monotone" dataKey="predicted" stroke="#4a7a52" strokeWidth={2} strokeDasharray="6 3" dot={false} name="predicted" />
                 <Line type="monotone" dataKey="actual" stroke="#b5654a" strokeWidth={2.5} dot={{ r: 3, fill: "#b5654a" }} connectNulls={false} name="actual" />
               </AreaChart>
             </ResponsiveContainer>
@@ -155,7 +155,7 @@ export default function ForecastingPage() {
                 <YAxis tick={{ fontSize: 11, fill: "#6b6057" }} axisLine={{ stroke: "#e6ddd0" }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} />
                 <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid #e6ddd0" }} formatter={(value) => value ? [`$${(Number(value) / 1000).toFixed(0)}K`, ""] : ["—", ""]} />
                 <Bar dataKey="actual" fill="#b5654a" radius={[4, 4, 0, 0]} barSize={24} name="Actual" />
-                <Bar dataKey="forecast" fill="#6b8f71" radius={[4, 4, 0, 0]} barSize={24} name="AI Forecast" />
+                <Bar dataKey="forecast" fill="#4a7a52" radius={[4, 4, 0, 0]} barSize={24} name="AI Forecast" />
                 <Line type="monotone" dataKey="budget" stroke="#b8a898" strokeWidth={2} strokeDasharray="6 3" dot={false} name="Budget" />
               </ComposedChart>
             </ResponsiveContainer>

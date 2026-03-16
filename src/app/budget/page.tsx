@@ -51,19 +51,19 @@ import {
 } from "recharts";
 
 const poStatusConfig: Record<string, { label: string; color: string; bg: string }> = {
-  "ai-recommended": { label: "AI Recommended", color: "text-rose-700", bg: "bg-rose-50 border-rose-200" },
+  "ai-recommended": { label: "AI Recommended", color: "text-red-700", bg: "bg-red-50 border-red-200" },
   "pending-approval": { label: "Pending Approval", color: "text-amber-700", bg: "bg-amber-50 border-amber-200" },
-  "approved": { label: "Approved", color: "text-orange-700", bg: "bg-orange-50 border-orange-200" },
-  "submitted": { label: "Submitted", color: "text-teal-700", bg: "bg-teal-50 border-teal-200" },
-  "in-transit": { label: "In Transit", color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200" },
+  "approved": { label: "Approved", color: "text-accent", bg: "bg-accent/10 border-accent/20" },
+  "submitted": { label: "Submitted", color: "text-accent", bg: "bg-accent/10 border-accent/20" },
+  "in-transit": { label: "In Transit", color: "text-accent", bg: "bg-accent/10 border-accent/20" },
 };
 
 const deliveryStatusConfig: Record<string, { label: string; color: string; icon: typeof Truck }> = {
   "label-created": { label: "Label Created", color: "text-stone-500", icon: Clock },
-  "picked-up": { label: "Picked Up", color: "text-orange-500", icon: Package },
-  "in-transit": { label: "In Transit", color: "text-amber-500", icon: Truck },
-  "out-for-delivery": { label: "Out for Delivery", color: "text-emerald-500", icon: Truck },
-  "delivered": { label: "Delivered", color: "text-emerald-600", icon: CheckCircle2 },
+  "picked-up": { label: "Picked Up", color: "text-amber-600", icon: Package },
+  "in-transit": { label: "In Transit", color: "text-amber-600", icon: Truck },
+  "out-for-delivery": { label: "Out for Delivery", color: "text-accent", icon: Truck },
+  "delivered": { label: "Delivered", color: "text-accent", icon: CheckCircle2 },
 };
 
 function downloadCSV(filename: string, headers: string[], rows: string[][]) {
@@ -110,7 +110,7 @@ export default function BudgetPage() {
               value: `$${(totalAnnualBudget / 1_000_000).toFixed(1)}M`,
               detail: `FY 2025-26`,
               icon: CircleDollarSign,
-              color: "bg-orange-50 text-orange-700",
+              color: "bg-primary/10 text-primary",
             },
             {
               label: "YTD Spend",
@@ -118,16 +118,16 @@ export default function BudgetPage() {
               detail: budgetVariance > 0
                 ? `$${(budgetVariance / 1000).toFixed(0)}K over budget`
                 : `$${(Math.abs(budgetVariance) / 1000).toFixed(0)}K under budget`,
-              detailColor: budgetVariance > 0 ? "text-red-600" : "text-emerald-600",
+              detailColor: budgetVariance > 0 ? "text-red-600" : "text-accent",
               icon: DollarSign,
-              color: budgetVariance > 0 ? "bg-red-50 text-red-600" : "bg-emerald-50 text-emerald-600",
+              color: budgetVariance > 0 ? "bg-red-50 text-red-600" : "bg-accent/10 text-accent",
             },
             {
               label: "Current Inventory Value",
               value: `$${(totalInventoryValue / 1_000_000).toFixed(2)}M`,
               detail: "Total value on shelves right now",
               icon: Boxes,
-              color: "bg-rose-50 text-rose-600",
+              color: "bg-primary/10 text-primary",
             },
             {
               label: "Pending Purchase Orders",
@@ -141,7 +141,7 @@ export default function BudgetPage() {
               value: `$${(inTransitTotal / 1000).toFixed(1)}K`,
               detail: `${upcomingDeliveries.length} deliveries expected`,
               icon: Truck,
-              color: "bg-teal-50 text-teal-700",
+              color: "bg-accent/10 text-accent",
             },
           ].map((kpi) => (
             <div key={kpi.label} className="bg-white rounded-xl border border-border p-5">
@@ -190,7 +190,7 @@ export default function BudgetPage() {
                 <h3 className="text-base font-semibold text-foreground">Monthly Inventory Spend vs. Budget</h3>
                 <p className="text-xs text-muted mt-1">
                   Blue bars show actual spend each month. The gray dashed line is the allocated budget.
-                  After March, the teal bars show the AI&apos;s forecast of what the hospital will spend,
+                  After March, the green bars show the AI&apos;s forecast of what the hospital will spend,
                   based on scheduled surgeries, seasonal patterns, and current supply prices.
                 </p>
               </div>
@@ -223,14 +223,14 @@ export default function BudgetPage() {
                       formatter={(value) => value ? [`$${(Number(value) / 1000).toFixed(0)}K`, ""] : ["—", ""]}
                     />
                     <Bar dataKey="actual" fill="#b5654a" radius={[4, 4, 0, 0]} barSize={28} name="Actual Spend" />
-                    <Bar dataKey="forecast" fill="#6b8f71" radius={[4, 4, 0, 0]} barSize={28} name="AI Forecast" />
+                    <Bar dataKey="forecast" fill="#4a7a52" radius={[4, 4, 0, 0]} barSize={28} name="AI Forecast" />
                     <Line type="monotone" dataKey="budget" stroke="#b8a898" strokeWidth={2} strokeDasharray="6 3" dot={false} name="Budget" />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
               <div className="mt-4 p-3 rounded-lg bg-amber-50 border border-amber-200 flex items-start gap-2">
                 <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-xs text-amber-800">
+                <p className="text-xs text-amber-700">
                   <span className="font-semibold">AI forecast note:</span> April spend is projected $32K above budget due to the flu surge driving higher PPE and medication orders. June also trends high because of 3 additional spinal fusion cases added to the OR schedule.
                 </p>
               </div>
@@ -297,7 +297,7 @@ export default function BudgetPage() {
                         <td className="px-4 py-3 text-sm font-medium text-foreground">${(b.ytdSpend / 1000).toLocaleString()}K</td>
                         <td className="px-4 py-3 text-sm text-muted">${(b.ytdBudget / 1000).toLocaleString()}K</td>
                         <td className="px-4 py-3">
-                          <span className={cn("text-xs font-semibold", variance > 0 ? "text-red-600" : "text-emerald-600")}>
+                          <span className={cn("text-xs font-semibold", variance > 0 ? "text-red-600" : "text-accent")}>
                             {variance > 0 ? "+" : ""}{(variance / 1000).toFixed(0)}K
                           </span>
                         </td>
@@ -308,7 +308,7 @@ export default function BudgetPage() {
                           </div>
                         </td>
                         <td className="px-4 py-3">
-                          <span className={cn("text-xs font-semibold", forecastVariance > 0 ? "text-red-600" : "text-emerald-600")}>
+                          <span className={cn("text-xs font-semibold", forecastVariance > 0 ? "text-red-600" : "text-accent")}>
                             {forecastVariance > 0 ? "+" : ""}{(forecastVariance / 1000).toFixed(0)}K
                           </span>
                         </td>
@@ -322,7 +322,7 @@ export default function BudgetPage() {
                     <td className="px-4 py-3 text-sm text-foreground">${(totalYtdSpend / 1_000_000).toFixed(2)}M</td>
                     <td className="px-4 py-3 text-sm text-muted">${(totalYtdBudget / 1_000_000).toFixed(2)}M</td>
                     <td className="px-4 py-3">
-                      <span className={cn("text-xs font-bold", budgetVariance > 0 ? "text-red-600" : "text-emerald-600")}>
+                      <span className={cn("text-xs font-bold", budgetVariance > 0 ? "text-red-600" : "text-accent")}>
                         {budgetVariance > 0 ? "+" : ""}{(budgetVariance / 1000).toFixed(0)}K
                       </span>
                     </td>
@@ -333,7 +333,7 @@ export default function BudgetPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className={cn("text-xs font-bold", (totalForecast - totalAnnualBudget) > 0 ? "text-red-600" : "text-emerald-600")}>
+                      <span className={cn("text-xs font-bold", (totalForecast - totalAnnualBudget) > 0 ? "text-red-600" : "text-accent")}>
                         {(totalForecast - totalAnnualBudget) > 0 ? "+" : ""}{((totalForecast - totalAnnualBudget) / 1000).toFixed(0)}K
                       </span>
                     </td>
@@ -352,10 +352,10 @@ export default function BudgetPage() {
           <div className="space-y-6">
             <div className="grid grid-cols-4 gap-4">
               {[
-                { label: "AI Recommended", count: upcomingPurchaseOrders.filter(p => p.status === "ai-recommended").length, cost: upcomingPurchaseOrders.filter(p => p.status === "ai-recommended").reduce((s, p) => s + p.totalCost, 0), color: "bg-rose-50 text-rose-600 border-rose-200" },
+                { label: "AI Recommended", count: upcomingPurchaseOrders.filter(p => p.status === "ai-recommended").length, cost: upcomingPurchaseOrders.filter(p => p.status === "ai-recommended").reduce((s, p) => s + p.totalCost, 0), color: "bg-red-50 text-red-600 border-red-200" },
                 { label: "Pending Approval", count: upcomingPurchaseOrders.filter(p => p.status === "pending-approval").length, cost: upcomingPurchaseOrders.filter(p => p.status === "pending-approval").reduce((s, p) => s + p.totalCost, 0), color: "bg-amber-50 text-amber-600 border-amber-200" },
-                { label: "Approved / Submitted", count: upcomingPurchaseOrders.filter(p => p.status === "approved" || p.status === "submitted").length, cost: upcomingPurchaseOrders.filter(p => p.status === "approved" || p.status === "submitted").reduce((s, p) => s + p.totalCost, 0), color: "bg-orange-50 text-orange-600 border-orange-200" },
-                { label: "In Transit", count: upcomingPurchaseOrders.filter(p => p.status === "in-transit").length, cost: upcomingPurchaseOrders.filter(p => p.status === "in-transit").reduce((s, p) => s + p.totalCost, 0), color: "bg-emerald-50 text-emerald-600 border-emerald-200" },
+                { label: "Approved / Submitted", count: upcomingPurchaseOrders.filter(p => p.status === "approved" || p.status === "submitted").length, cost: upcomingPurchaseOrders.filter(p => p.status === "approved" || p.status === "submitted").reduce((s, p) => s + p.totalCost, 0), color: "bg-accent/10 text-accent border-accent/20" },
+                { label: "In Transit", count: upcomingPurchaseOrders.filter(p => p.status === "in-transit").length, cost: upcomingPurchaseOrders.filter(p => p.status === "in-transit").reduce((s, p) => s + p.totalCost, 0), color: "bg-accent/10 text-accent border-accent/20" },
               ].map((s) => (
                 <div key={s.label} className={cn("rounded-xl border p-4", s.color)}>
                   <p className="text-lg font-bold">{s.count}</p>
@@ -442,9 +442,9 @@ export default function BudgetPage() {
                       </div>
                     )}
                     {approvedPOs.has(po.id) && (
-                      <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                        <span className="text-xs font-medium text-emerald-700">Approved & submitted</span>
+                      <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-lg bg-accent/10 border border-accent/20">
+                        <CheckCircle2 className="w-4 h-4 text-accent" />
+                        <span className="text-xs font-medium text-accent">Approved & submitted</span>
                       </div>
                     )}
                   </div>
@@ -461,11 +461,11 @@ export default function BudgetPage() {
           <div className="space-y-6">
             {/* Summary stats */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-orange-50 border border-orange-200 flex items-center gap-3">
-                <Truck className="w-5 h-5 text-orange-600 shrink-0" />
+              <div className="p-4 rounded-xl bg-accent/10 border border-accent/20 flex items-center gap-3">
+                <Truck className="w-5 h-5 text-accent shrink-0" />
                 <div>
-                  <p className="text-lg font-bold text-orange-800">{upcomingDeliveries.length}</p>
-                  <p className="text-xs text-orange-700">On-Track Shipments — ${inTransitTotal.toLocaleString()}</p>
+                  <p className="text-lg font-bold text-foreground">{upcomingDeliveries.length}</p>
+                  <p className="text-xs text-accent">On-Track Shipments — ${inTransitTotal.toLocaleString()}</p>
                 </div>
               </div>
               <div className="p-4 rounded-xl bg-red-50 border border-red-200 flex items-center gap-3">
@@ -478,7 +478,7 @@ export default function BudgetPage() {
               <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-3">
                 <Timer className="w-5 h-5 text-amber-600 shrink-0" />
                 <div>
-                  <p className="text-lg font-bold text-amber-800">{(delayedShipments.reduce((s, d) => s + d.delayDays, 0) / delayedShipments.length).toFixed(1)} days</p>
+                  <p className="text-lg font-bold text-amber-700">{(delayedShipments.reduce((s, d) => s + d.delayDays, 0) / delayedShipments.length).toFixed(1)} days</p>
                   <p className="text-xs text-amber-700">Avg Delay — {delayedShipments.filter(d => d.impactSeverity === "critical").length} critical</p>
                 </div>
               </div>
@@ -507,7 +507,7 @@ export default function BudgetPage() {
                           <span className="text-[11px] text-muted">PO: {ds.poId}</span>
                           <span className={cn(
                             "text-[11px] font-bold px-2 py-0.5 rounded-full",
-                            ds.impactSeverity === "critical" ? "bg-red-200 text-red-800" : ds.impactSeverity === "high" ? "bg-amber-200 text-amber-800" : "bg-stone-200 text-stone-700"
+                            ds.impactSeverity === "critical" ? "bg-red-200 text-red-800" : ds.impactSeverity === "high" ? "bg-amber-200 text-amber-700" : "bg-stone-200 text-stone-700"
                           )}>
                             {ds.impactSeverity.toUpperCase()} — {ds.delayDays} DAY DELAY
                           </span>
@@ -604,7 +604,7 @@ export default function BudgetPage() {
             {/* On-Track Deliveries */}
             <div>
               <h3 className="text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Truck className="w-5 h-5 text-emerald-500" />
+                <Truck className="w-5 h-5 text-accent" />
                 On-Track Deliveries
               </h3>
             </div>
@@ -644,12 +644,12 @@ export default function BudgetPage() {
                         <div key={step} className="flex-1 flex items-center">
                           <div className={cn(
                             "w-3 h-3 rounded-full shrink-0 border-2",
-                            isPast ? "bg-emerald-500 border-emerald-500" : "bg-white border-stone-300"
+                            isPast ? "bg-accent border-accent" : "bg-white border-stone-300"
                           )}>
-                            {isCurrent && <div className="w-full h-full rounded-full animate-ping bg-emerald-400 opacity-50" />}
+                            {isCurrent && <div className="w-full h-full rounded-full animate-ping bg-accent-light opacity-50" />}
                           </div>
                           {i < 4 && (
-                            <div className={cn("flex-1 h-0.5", isPast && i < currentIdx ? "bg-emerald-500" : "bg-stone-200")} />
+                            <div className={cn("flex-1 h-0.5", isPast && i < currentIdx ? "bg-accent" : "bg-stone-200")} />
                           )}
                         </div>
                       );

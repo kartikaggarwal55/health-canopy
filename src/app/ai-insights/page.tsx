@@ -121,7 +121,7 @@ export default function AIInsightsPage() {
             </h3>
             <p className="text-xs text-muted mt-1 max-w-3xl leading-relaxed">
               Total supply items consumed hospital-wide per day. The solid blue line is what was actually used.
-              The dashed teal line is what the AI predicted. Comparing these shows how accurate our forecasting is
+              The dashed green line is what the AI predicted. Comparing these shows how accurate our forecasting is
               and where consumption is deviating from expectations.
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function AIInsightsPage() {
               <span className="text-foreground font-medium">Actual consumption</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-0.5 rounded bg-accent border-dashed" style={{ borderTop: "2px dashed #6b8f71", height: 0 }} />
+              <div className="w-8 h-0.5 rounded bg-accent border-dashed" style={{ borderTop: "2px dashed #4a7a52", height: 0 }} />
               <span className="text-foreground font-medium">AI predicted</span>
             </div>
             <div className="flex items-center gap-2">
@@ -159,9 +159,9 @@ export default function AIInsightsPage() {
                   }}
                 />
                 <ReferenceLine x="Mar 15" stroke="#c44840" strokeDasharray="4 4" label={{ value: "Today", position: "top", fontSize: 10, fill: "#c44840" }} />
-                <Area type="monotone" dataKey="upper" stackId="band" stroke="none" fill="#6b8f71" fillOpacity={0.08} />
+                <Area type="monotone" dataKey="upper" stackId="band" stroke="none" fill="#4a7a52" fillOpacity={0.08} />
                 <Area type="monotone" dataKey="lower" stackId="band" stroke="none" fill="#ffffff" fillOpacity={1} />
-                <Line type="monotone" dataKey="predicted" stroke="#6b8f71" strokeWidth={2} strokeDasharray="6 3" dot={false} name="predicted" />
+                <Line type="monotone" dataKey="predicted" stroke="#4a7a52" strokeWidth={2} strokeDasharray="6 3" dot={false} name="predicted" />
                 <Line type="monotone" dataKey="actual" stroke="#b5654a" strokeWidth={2.5} dot={{ r: 3, fill: "#b5654a" }} connectNulls={false} name="actual" />
               </AreaChart>
             </ResponsiveContainer>
@@ -194,7 +194,7 @@ export default function AIInsightsPage() {
                   <Bar dataKey="current" fill="#b5654a" radius={[4, 4, 0, 0]} barSize={24} name="Current" />
                   <Bar dataKey="predicted" radius={[4, 4, 0, 0]} barSize={24} name="AI Predicted">
                     {departmentConsumption.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.change > 10 ? "#ef4444" : "#6b8f71"} />
+                      <Cell key={`cell-${index}`} fill={entry.change > 10 ? "#ef4444" : "#4a7a52"} />
                     ))}
                   </Bar>
                 </BarChart>

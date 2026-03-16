@@ -37,7 +37,7 @@ import {
 } from "@/lib/mock-data";
 
 const trendIcons = {
-  improving: { icon: TrendingUp, color: "text-emerald-500", label: "Improving" },
+  improving: { icon: TrendingUp, color: "text-accent", label: "Improving" },
   stable: { icon: Minus, color: "text-gray-400", label: "Stable" },
   declining: { icon: TrendingDown, color: "text-red-500", label: "Declining" },
 };
@@ -45,7 +45,7 @@ const trendIcons = {
 function LargeScoreGauge({ score }: { score: number }) {
   const circumference = 2 * Math.PI * 45;
   const offset = circumference - (score / 100) * circumference;
-  const color = score >= 90 ? "#10b981" : score >= 80 ? "#f59e0b" : "#ef4444";
+  const color = score >= 90 ? "#4a7a52" : score >= 80 ? "#f59e0b" : "#ef4444";
   const label = score >= 90 ? "Survey Ready" : score >= 80 ? "Needs Attention" : "At Risk";
 
   return (
@@ -73,8 +73,8 @@ function LargeScoreGauge({ score }: { score: number }) {
 function ChapterCard({ chapter, expanded, onToggle }: { chapter: ComplianceChapter; expanded: boolean; onToggle: () => void }) {
   const trend = trendIcons[chapter.trend];
   const TrendIcon = trend.icon;
-  const scoreColor = chapter.score >= 90 ? "text-emerald-600" : chapter.score >= 80 ? "text-amber-600" : "text-red-600";
-  const barColor = chapter.score >= 90 ? "bg-emerald-500" : chapter.score >= 80 ? "bg-amber-400" : "bg-red-400";
+  const scoreColor = chapter.score >= 90 ? "text-accent" : chapter.score >= 80 ? "text-amber-600" : "text-red-600";
+  const barColor = chapter.score >= 90 ? "bg-accent" : chapter.score >= 80 ? "bg-amber-400" : "bg-red-400";
   const findings = complianceFindings.filter((f) => f.chapter === chapter.code);
 
   return (
@@ -82,7 +82,7 @@ function ChapterCard({ chapter, expanded, onToggle }: { chapter: ComplianceChapt
       <button onClick={onToggle} className="w-full flex items-center gap-4 p-5 hover:bg-stone-50/50 transition-colors text-left">
         <div className={cn(
           "w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold shrink-0",
-          chapter.score >= 90 ? "bg-emerald-50 text-emerald-600" :
+          chapter.score >= 90 ? "bg-accent/10 text-accent" :
           chapter.score >= 80 ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-600"
         )}>
           {chapter.code}
@@ -117,8 +117,8 @@ function ChapterCard({ chapter, expanded, onToggle }: { chapter: ComplianceChapt
             {findings.map((f) => (
               <div key={f.id} className={cn(
                 "p-3 rounded-lg border",
-                f.severity === "high" ? "bg-red-50 border-red-100" :
-                f.severity === "medium" ? "bg-amber-50 border-amber-100" : "bg-stone-100 border-stone-200"
+                f.severity === "high" ? "bg-red-50 border-red-200" :
+                f.severity === "medium" ? "bg-amber-50 border-amber-200" : "bg-stone-100 border-stone-200"
               )}>
                 <div className="flex items-start gap-2">
                   {f.severity === "high" ? <CircleAlert className="w-4 h-4 text-red-500 shrink-0 mt-0.5" /> :
@@ -221,11 +221,11 @@ export default function CompliancePage() {
               <div className="grid grid-cols-3 gap-3">
                 {[
                   { label: "Total Equipment", value: pmStats.total, color: "text-foreground" },
-                  { label: "PM Current", value: pmStats.current, color: "text-emerald-600" },
+                  { label: "PM Current", value: pmStats.current, color: "text-accent" },
                   { label: "PM Due Soon", value: pmStats.dueSoon, color: "text-amber-600" },
                   { label: "PM Overdue", value: pmStats.overdue, color: "text-red-600" },
-                  { label: "High Risk", value: pmStats.highRisk, color: "text-rose-600" },
-                  { label: "Life Support", value: pmStats.lifeSupport, color: "text-orange-600" },
+                  { label: "High Risk", value: pmStats.highRisk, color: "text-red-600" },
+                  { label: "Life Support", value: pmStats.lifeSupport, color: "text-amber-600" },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center p-3 rounded-lg bg-stone-50">
                     <p className={cn("text-xl font-bold", stat.color)}>{stat.value}</p>
@@ -343,14 +343,14 @@ export default function CompliancePage() {
                         "text-[11px] font-semibold px-2 py-1 rounded-full",
                         eq.riskLevel === "high" ? "bg-red-50 text-red-700 border border-red-200" :
                         eq.riskLevel === "medium" ? "bg-amber-50 text-amber-700 border border-amber-200" :
-                        "bg-green-50 text-green-700 border border-green-200"
+                        "bg-accent/10 text-accent border border-accent/20"
                       )}>
                         {eq.riskLevel.toUpperCase()}
                       </span>
                     </td>
                     <td className="px-4 py-3">
                       {eq.isLifeSupport ? (
-                        <span className="text-[11px] font-semibold px-2 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                        <span className="text-[11px] font-semibold px-2 py-1 rounded-full bg-red-50 text-red-700 border border-red-200">
                           LIFE SUPPORT
                         </span>
                       ) : (
@@ -360,7 +360,7 @@ export default function CompliancePage() {
                     <td className="px-4 py-3">
                       <span className={cn(
                         "text-[11px] font-semibold px-2 py-1 rounded-full",
-                        eq.pmStatus === "current" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" :
+                        eq.pmStatus === "current" ? "bg-accent/10 text-accent border border-accent/20" :
                         eq.pmStatus === "due-soon" ? "bg-amber-50 text-amber-700 border border-amber-200" :
                         "bg-red-50 text-red-700 border border-red-200"
                       )}>
@@ -378,7 +378,7 @@ export default function CompliancePage() {
                     <td className="px-4 py-3">
                       {eq.aemApplied ? (
                         <Tooltip content="Alternative Equipment Maintenance schedule in use">
-                          <span className="text-[11px] font-medium text-orange-600 cursor-help border-b border-dotted border-orange-300">AEM</span>
+                          <span className="text-[11px] font-medium text-amber-600 cursor-help border-b border-dotted border-amber-300">AEM</span>
                         </Tooltip>
                       ) : (
                         <Tooltip content="Manufacturer-recommended maintenance schedule">
@@ -389,7 +389,7 @@ export default function CompliancePage() {
                     <td className="px-4 py-3">
                       <span className={cn(
                         "text-[11px] font-medium",
-                        eq.status === "operational" ? "text-emerald-600" :
+                        eq.status === "operational" ? "text-accent" :
                         eq.status === "maintenance" ? "text-amber-600" : "text-red-600"
                       )}>
                         {eq.status.charAt(0).toUpperCase() + eq.status.slice(1)}
@@ -424,11 +424,11 @@ export default function CompliancePage() {
                 </div>
               </div>
               <div className="bg-white rounded-xl border border-border p-5 flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-emerald-50">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+                <div className="p-3 rounded-lg bg-accent/10">
+                  <CheckCircle2 className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-emerald-600">12</p>
+                  <p className="text-2xl font-bold text-accent">12</p>
                   <p className="text-xs text-muted">Resolved (Last 90 Days)</p>
                 </div>
               </div>
@@ -466,7 +466,7 @@ export default function CompliancePage() {
                           "text-[11px] font-semibold px-2 py-1 rounded-full border",
                           f.status === "open" ? "bg-red-50 text-red-700 border-red-200" :
                           f.status === "in-progress" ? "bg-amber-50 text-amber-700 border-amber-200" :
-                          "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          "bg-accent/10 text-accent border-accent/20"
                         )}>
                           {f.status === "in-progress" ? "IN PROGRESS" : f.status.toUpperCase()}
                         </span>

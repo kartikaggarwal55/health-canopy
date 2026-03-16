@@ -40,11 +40,11 @@ const departmentFilters = ["All", ...departments.map((d) => d.name)];
 const supplyChainFilters = ["All", "med-surg", "pharmacy", "surgical", "lab"];
 
 const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
-  "in-stock": { label: "In Stock", color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200" },
+  "in-stock": { label: "In Stock", color: "text-accent", bg: "bg-accent/10 border-accent/20" },
   "low-stock": { label: "Low Stock", color: "text-amber-700", bg: "bg-amber-50 border-amber-200" },
   "critical": { label: "Critical", color: "text-red-700", bg: "bg-red-50 border-red-200" },
   "out-of-stock": { label: "Out of Stock", color: "text-red-700", bg: "bg-red-100 border-red-300" },
-  "expiring-soon": { label: "Expiring Soon", color: "text-orange-700", bg: "bg-orange-50 border-orange-200" },
+  "expiring-soon": { label: "Expiring Soon", color: "text-amber-700", bg: "bg-amber-50 border-amber-200" },
 };
 
 const deptIcons: Record<string, typeof Package> = {
@@ -61,7 +61,7 @@ const deptIcons: Record<string, typeof Package> = {
 function StockBar({ current, par, reorder }: { current: number; par: number; reorder: number }) {
   const pct = Math.min((current / par) * 100, 100);
   const reorderPct = (reorder / par) * 100;
-  const color = pct <= 25 ? "bg-red-500" : pct <= 60 ? "bg-amber-400" : "bg-emerald-500";
+  const color = pct <= 25 ? "bg-red-500" : pct <= 60 ? "bg-amber-400" : "bg-accent";
 
   return (
     <div className="w-full">
@@ -160,12 +160,12 @@ export default function InventoryPage() {
         {/* Summary Cards */}
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: "Total SKUs", value: summaryStats.total, icon: Package, color: "text-orange-700 bg-orange-50" },
-            { label: "In Stock", value: summaryStats.inStock, icon: CheckCircle2, color: "text-emerald-600 bg-emerald-50" },
+            { label: "Total SKUs", value: summaryStats.total, icon: Package, color: "text-primary bg-primary/10" },
+            { label: "In Stock", value: summaryStats.inStock, icon: CheckCircle2, color: "text-accent bg-accent/10" },
             { label: "Low Stock", value: summaryStats.lowStock, icon: AlertTriangle, color: "text-amber-600 bg-amber-50" },
             { label: "Critical / OOS", value: summaryStats.critical, icon: XCircle, color: "text-red-600 bg-red-50", tooltip: "Critical stock or completely Out of Stock" },
-            { label: "Expiring Soon", value: summaryStats.expiring, icon: Clock, color: "text-orange-600 bg-orange-50" },
-            { label: "Inventory Value", value: `$${(summaryStats.totalValue / 1000).toFixed(0)}K`, icon: FileBarChart, color: "text-rose-600 bg-rose-50" },
+            { label: "Expiring Soon", value: summaryStats.expiring, icon: Clock, color: "text-amber-600 bg-amber-50" },
+            { label: "Inventory Value", value: `$${(summaryStats.totalValue / 1000).toFixed(0)}K`, icon: FileBarChart, color: "text-primary bg-primary/10" },
             { label: "PAR Locations", value: parLocations.length, icon: MapPin, color: "text-primary bg-primary/10" },
           ].map((s) => (
             <div key={s.label} className="bg-white rounded-xl border border-border p-4 flex items-center gap-3">
@@ -351,7 +351,7 @@ export default function InventoryPage() {
                       </td>
                       <td className="px-3 py-3">
                         {item.expirationDate ? (
-                          <span className={cn("text-xs", isExpiringSoon ? "text-orange-600 font-medium" : "text-foreground")}>
+                          <span className={cn("text-xs", isExpiringSoon ? "text-amber-600 font-medium" : "text-foreground")}>
                             {item.expirationDate}
                           </span>
                         ) : (
@@ -433,12 +433,12 @@ export default function InventoryPage() {
                   ))}
                 </div>
                 {item.category === "Controlled Substance" && (
-                  <div className="mt-4 p-3 rounded-lg bg-rose-50 border border-rose-200">
+                  <div className="mt-4 p-3 rounded-lg bg-red-50 border border-red-200">
                     <div className="flex items-center gap-2">
-                      <ShieldAlert className="w-4 h-4 text-rose-600" />
-                      <span className="text-xs font-semibold text-rose-700">Controlled Substance — Chain of Custody Active</span>
+                      <ShieldAlert className="w-4 h-4 text-red-600" />
+                      <span className="text-xs font-semibold text-red-700">Controlled Substance — Chain of Custody Active</span>
                     </div>
-                    <p className="text-[11px] text-rose-600 mt-1">
+                    <p className="text-[11px] text-red-600 mt-1">
                       Full receipt/disposition tracking per MM 13.01.01. Last audit: Mar 13, 2026.
                       DSCSA serial verification: Verified.
                     </p>
@@ -472,7 +472,7 @@ export default function InventoryPage() {
                                 <div className="flex items-center gap-2">
                                   <span className="text-xs font-semibold text-foreground">{loc.location}</span>
                                   <span className="text-[11px] px-1.5 py-0.5 rounded bg-stone-100 text-muted">{loc.floor}</span>
-                                  <span className="text-[11px] px-1.5 py-0.5 rounded bg-orange-50 text-orange-600">{storageIcons[loc.storageType]}</span>
+                                  <span className="text-[11px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-600">{storageIcons[loc.storageType]}</span>
                                 </div>
                               </div>
                               <div className="flex items-center gap-3 shrink-0">

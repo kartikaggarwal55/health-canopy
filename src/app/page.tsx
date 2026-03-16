@@ -53,7 +53,7 @@ const metrics = [
     change: "+124 this month",
     trend: "up" as const,
     icon: Package,
-    color: "bg-orange-50 text-orange-700",
+    color: "bg-primary/10 text-primary",
   },
   {
     label: "PAR Locations",
@@ -61,7 +61,7 @@ const metrics = [
     change: "across 4 facilities",
     trend: "neutral" as const,
     icon: MapPin,
-    color: "bg-rose-50 text-rose-600",
+    color: "bg-primary/10 text-primary",
   },
   {
     label: "Active Alerts",
@@ -77,16 +77,16 @@ const metrics = [
     change: "-6.5% vs budget",
     trend: "up" as const,
     icon: CircleDollarSign,
-    color: "bg-emerald-50 text-emerald-600",
+    color: "bg-accent/10 text-accent",
   },
 ];
 
 function InsightCard({ insight }: { insight: (typeof aiInsights)[0] }) {
   const severityConfig = {
-    high: { bg: "bg-red-50 border-red-100", icon: AlertCircle, iconColor: "text-red-500", badge: "bg-red-100 text-red-700" },
-    medium: { bg: "bg-amber-50 border-amber-100", icon: AlertTriangle, iconColor: "text-amber-500", badge: "bg-amber-100 text-amber-700" },
-    low: { bg: "bg-stone-100 border-stone-200", icon: Activity, iconColor: "text-stone-500", badge: "bg-stone-200 text-stone-700" },
-    info: { bg: "bg-emerald-50 border-emerald-100", icon: Sparkles, iconColor: "text-emerald-500", badge: "bg-emerald-100 text-emerald-700" },
+    high: { bg: "bg-red-50 border-red-200", icon: AlertCircle, iconColor: "text-red-600", badge: "bg-red-100 text-red-700" },
+    medium: { bg: "bg-amber-50 border-amber-200", icon: AlertTriangle, iconColor: "text-amber-600", badge: "bg-amber-100 text-amber-700" },
+    low: { bg: "bg-stone-50 border-stone-200", icon: Activity, iconColor: "text-stone-500", badge: "bg-stone-200 text-stone-600" },
+    info: { bg: "bg-accent/5 border-accent/20", icon: Sparkles, iconColor: "text-accent", badge: "bg-accent/10 text-accent" },
   };
   const config = severityConfig[insight.severity];
   const Icon = config.icon;
@@ -117,11 +117,11 @@ function InsightCard({ insight }: { insight: (typeof aiInsights)[0] }) {
 }
 
 const poStatusColors: Record<string, string> = {
-  "ai-recommended": "bg-rose-50 text-rose-700 border-rose-200",
+  "ai-recommended": "bg-red-50 text-red-700 border-red-200",
   "pending-approval": "bg-amber-50 text-amber-700 border-amber-200",
-  "approved": "bg-orange-50 text-orange-700 border-orange-200",
-  "submitted": "bg-teal-50 text-teal-700 border-teal-200",
-  "in-transit": "bg-emerald-50 text-emerald-700 border-emerald-200",
+  "approved": "bg-accent/10 text-accent border-accent/20",
+  "submitted": "bg-accent/10 text-accent border-accent/20",
+  "in-transit": "bg-accent/10 text-accent border-accent/20",
 };
 
 const poStatusLabels: Record<string, string> = {
@@ -163,7 +163,7 @@ export default function Dashboard() {
                   <p className="text-xs font-medium text-muted uppercase tracking-wide">{m.label}</p>
                   <p className="text-2xl font-bold text-foreground mt-1">{m.value}</p>
                   <div className="flex items-center gap-1 mt-1.5">
-                    {m.trend === "up" && <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />}
+                    {m.trend === "up" && <TrendingUp className="w-3.5 h-3.5 text-accent" />}
                     {m.trend === "down" && <TrendingDown className="w-3.5 h-3.5 text-amber-500" />}
                     <span className="text-xs text-muted">{m.change}</span>
                   </div>
@@ -185,14 +185,14 @@ export default function Dashboard() {
             { chain: "Laboratory", fill: 96, locations: 2, status: "normal" },
           ].map((sc) => (
             <div key={sc.chain} className="bg-white rounded-xl border border-border p-4 flex items-center gap-3">
-              <div className={cn("w-3 h-3 rounded-full shrink-0", sc.status === "normal" ? "bg-emerald-500" : sc.status === "low" ? "bg-amber-400" : "bg-red-500")} />
+              <div className={cn("w-3 h-3 rounded-full shrink-0", sc.status === "normal" ? "bg-accent" : sc.status === "low" ? "bg-amber-400" : "bg-red-500")} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold text-foreground">{sc.chain}</span>
-                  <span className={cn("text-xs font-bold", sc.fill >= 90 ? "text-emerald-600" : sc.fill >= 80 ? "text-amber-600" : "text-red-600")}>{sc.fill}%</span>
+                  <span className={cn("text-xs font-bold", sc.fill >= 90 ? "text-accent" : sc.fill >= 80 ? "text-amber-600" : "text-red-600")}>{sc.fill}%</span>
                 </div>
                 <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden mt-1.5">
-                  <div className={cn("h-full rounded-full", sc.fill >= 90 ? "bg-emerald-500" : sc.fill >= 80 ? "bg-amber-400" : "bg-red-500")} style={{ width: `${sc.fill}%` }} />
+                  <div className={cn("h-full rounded-full", sc.fill >= 90 ? "bg-accent" : sc.fill >= 80 ? "bg-amber-400" : "bg-red-500")} style={{ width: `${sc.fill}%` }} />
                 </div>
                 <span className="text-[11px] text-muted mt-1">{sc.locations} PAR locations</span>
               </div>
@@ -212,7 +212,7 @@ export default function Dashboard() {
               </h3>
               <div className="space-y-3">
                 {criticalItems.map((item) => (
-                  <div key={item.id} className="p-3 rounded-lg bg-red-50 border border-red-100">
+                  <div key={item.id} className="p-3 rounded-lg bg-red-50 border border-red-200">
                     <p className="text-xs font-semibold text-foreground truncate">{item.name}</p>
                     <p className="text-[11px] text-muted mt-0.5">{item.department}</p>
                     <div className="flex items-center gap-2 mt-1.5">
@@ -226,7 +226,7 @@ export default function Dashboard() {
                   </div>
                 ))}
                 {expiringItems.map((item) => (
-                  <div key={item.id} className="p-3 rounded-lg bg-amber-50 border border-amber-100">
+                  <div key={item.id} className="p-3 rounded-lg bg-amber-50 border border-amber-200">
                     <p className="text-xs font-semibold text-foreground truncate">{item.name}</p>
                     <p className="text-[11px] text-muted mt-0.5">{item.department}</p>
                     <div className="flex items-center gap-2 mt-1.5">
@@ -246,7 +246,7 @@ export default function Dashboard() {
             {/* Pending Orders / Deliveries */}
             <div className="bg-white rounded-xl border border-border p-5">
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-orange-700" />
+                <FileText className="w-4 h-4 text-amber-600" />
                 Orders Needing Action
               </h3>
               <div className="space-y-3">
@@ -283,7 +283,7 @@ export default function Dashboard() {
                   const under = imb.locations.find((l) => l.status === "critical" || l.status === "stockout" || l.pctOfPar < 50);
                   if (!over || !under) return null;
                   return (
-                    <div key={imb.itemId} className="p-3 rounded-lg bg-amber-50 border border-amber-100">
+                    <div key={imb.itemId} className="p-3 rounded-lg bg-amber-50 border border-amber-200">
                       <p className="text-xs font-semibold text-foreground">{imb.itemName}</p>
                       <div className="flex items-center gap-2 mt-1.5 text-[11px]">
                         <span className="text-amber-700 font-medium">{over.locationName}: {over.pctOfPar}% of PAR</span>
@@ -327,7 +327,7 @@ export default function Dashboard() {
             {/* Incoming Deliveries — delayed + on-track combined */}
             <div className="bg-white rounded-xl border border-border p-5">
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Truck className="w-4 h-4 text-emerald-500" />
+                <Truck className="w-4 h-4 text-accent" />
                 Incoming Deliveries
               </h3>
               <div className="space-y-3">
@@ -371,9 +371,9 @@ export default function Dashboard() {
                     "delivered": "Delivered",
                   };
                   const statusColors: Record<string, string> = {
-                    "out-for-delivery": "text-emerald-600 font-semibold",
+                    "out-for-delivery": "text-accent font-semibold",
                     "in-transit": "text-amber-600",
-                    "picked-up": "text-orange-700",
+                    "picked-up": "text-amber-600",
                   };
                   return (
                     <div key={del.id} className="p-3 rounded-lg border border-border">
@@ -433,7 +433,7 @@ export default function Dashboard() {
                   <Bar dataKey="current" fill="#b5654a" radius={[4, 4, 0, 0]} barSize={24} name="Current" />
                   <Bar dataKey="predicted" radius={[4, 4, 0, 0]} barSize={24} name="AI Predicted">
                     {departmentConsumption.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.change > 10 ? "#ef4444" : "#6b8f71"} />
+                      <Cell key={`cell-${index}`} fill={entry.change > 10 ? "#ef4444" : "#4a7a52"} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -452,14 +452,14 @@ export default function Dashboard() {
                 <div key={i} className="flex items-start gap-3 pb-3 border-b border-border last:border-0 last:pb-0">
                   <div className={cn(
                     "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                    a.action === "AI Alert" ? "bg-rose-50" :
+                    a.action === "AI Alert" ? "bg-red-50" :
                     a.action.includes("alert") ? "bg-amber-50" :
-                    a.action.includes("Compliance") ? "bg-orange-50" : "bg-stone-50"
+                    a.action.includes("Compliance") ? "bg-amber-50" : "bg-stone-50"
                   )}>
-                    {a.action === "AI Alert" ? <Brain className="w-4 h-4 text-rose-500" /> :
+                    {a.action === "AI Alert" ? <Brain className="w-4 h-4 text-red-600" /> :
                      a.action.includes("alert") ? <AlertTriangle className="w-4 h-4 text-amber-500" /> :
-                     a.action.includes("completed") || a.action.includes("received") ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> :
-                     a.action.includes("PO") ? <Boxes className="w-4 h-4 text-orange-700" /> :
+                     a.action.includes("completed") || a.action.includes("received") ? <CheckCircle2 className="w-4 h-4 text-accent" /> :
+                     a.action.includes("PO") ? <Boxes className="w-4 h-4 text-amber-600" /> :
                      <Activity className="w-4 h-4 text-stone-400" />}
                   </div>
                   <div className="flex-1 min-w-0">
