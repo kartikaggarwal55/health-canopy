@@ -97,8 +97,8 @@ export default function BudgetPage() {
   return (
     <div className="min-h-screen">
       <Header
-        title="Budget & Financials"
-        subtitle="Inventory budget tracking, current valuation, purchase orders, and delivery cost forecasting"
+        title="Financials"
+        subtitle="Inventory budget tracking, purchase orders, and delivery cost forecasting"
       />
 
       <div className="p-8 space-y-6">
@@ -342,62 +342,6 @@ export default function BudgetPage() {
               </table>
             </div>
 
-            {/* Current Inventory Valuation */}
-            <div className="bg-white rounded-xl border border-border overflow-hidden">
-              <div className="p-5 border-b border-border">
-                <h3 className="text-sm font-semibold text-foreground">Current Inventory Valuation by Department</h3>
-                <p className="text-xs text-muted mt-0.5">Total dollar value of supplies currently on shelves across the hospital</p>
-              </div>
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border bg-stone-50">
-                    {[
-                      { label: "Department" },
-                      { label: "Item Count" },
-                      { label: "Total Value" },
-                      { label: "Avg Days on Hand", tooltip: "Average number of days current stock will last at the current consumption rate" },
-                      { label: "Value / Item" },
-                    ].map((h) => (
-                      <th key={h.label} className="text-left text-[11px] font-semibold text-muted uppercase tracking-wider px-4 py-3">
-                        {h.tooltip ? (
-                          <InfoTooltip content={h.tooltip} position="bottom" wide>
-                            <span className="cursor-help border-b border-dotted border-muted/60">{h.label}</span>
-                          </InfoTooltip>
-                        ) : h.label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {inventoryValuation.map((v) => (
-                    <tr key={v.department} className="border-b border-border/50">
-                      <td className="px-4 py-3 text-sm font-medium text-foreground">{v.department}</td>
-                      <td className="px-4 py-3 text-sm text-foreground">{v.itemCount.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-foreground">${(v.totalValue / 1000).toFixed(0)}K</td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          <span className={cn("text-sm", v.avgDaysOnHand < 7 ? "text-red-600 font-medium" : v.avgDaysOnHand > 15 ? "text-amber-600" : "text-foreground")}>
-                            {v.avgDaysOnHand}
-                          </span>
-                          {v.avgDaysOnHand < 7 && <span className="text-[11px] px-1.5 py-0.5 rounded bg-red-50 text-red-600 font-medium">LOW</span>}
-                          {v.avgDaysOnHand > 15 && <span className="text-[11px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">HIGH</span>}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-muted">${(v.totalValue / v.itemCount).toFixed(2)}</td>
-                    </tr>
-                  ))}
-                  <tr className="bg-stone-50 font-semibold">
-                    <td className="px-4 py-3 text-sm text-foreground">Total</td>
-                    <td className="px-4 py-3 text-sm text-foreground">{inventoryValuation.reduce((s, v) => s + v.itemCount, 0).toLocaleString()}</td>
-                    <td className="px-4 py-3 text-sm font-bold text-foreground">${(totalInventoryValue / 1_000_000).toFixed(2)}M</td>
-                    <td className="px-4 py-3 text-sm text-muted">
-                      {(inventoryValuation.reduce((s, v) => s + v.avgDaysOnHand, 0) / inventoryValuation.length).toFixed(1)} avg
-                    </td>
-                    <td className="px-4 py-3" />
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         )}
 

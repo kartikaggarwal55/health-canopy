@@ -19,8 +19,8 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Inventory", href: "/inventory", icon: Package },
   { name: "AI Insights", href: "/ai-insights", icon: Brain },
-  { name: "Forecasting & OR", href: "/forecasting", icon: TrendingUp },
-  { name: "Budget & Procurement", href: "/budget", icon: CircleDollarSign },
+  { name: "Forecasting", href: "/forecasting", icon: TrendingUp },
+  { name: "Financials", href: "/budget", icon: CircleDollarSign },
   { name: "Supply Chain", href: "/analytics", icon: BarChart3 },
   { name: "Compliance", href: "/compliance", icon: ShieldCheck },
 ];

@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Header } from "@/components/layout/header";
 import { useToast } from "@/components/ui/toast";
 import {
   Brain,
-  AlertTriangle,
-  Calendar,
   Thermometer,
   Zap,
   Target,
@@ -16,22 +14,13 @@ import {
   AlertOctagon,
   Info,
   TrendingUp,
-  AlertCircle,
   ChevronRight,
-  ExternalLink,
-  Activity,
-  Sparkles,
-  User,
-  Stethoscope,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   aiInsights,
   demandForecastData,
-  upcomingSurgeries,
-  procedureSupplyProfiles,
   monthlySpendForecast,
-  preferenceCards,
 } from "@/lib/mock-data";
 import {
   Line,
@@ -62,69 +51,21 @@ const severityConfig = {
 
 export default function ForecastingPage() {
   const [activeScenario, setActiveScenario] = useState<"baseline" | "flu-surge" | "supply-disruption">("baseline");
-  const [expandedDay, setExpandedDay] = useState<string | null>("Mar 20");
   const [expandedInsight, setExpandedInsight] = useState<string | null>("AI-001");
   const [actionedInsights, setActionedInsights] = useState<Set<string>>(new Set());
   const [snoozedInsights, setSnoozedInsights] = useState<Set<string>>(new Set());
   const { showToast } = useToast();
 
-  const daySupplyBreakdown = useMemo(() => {
-    if (!expandedDay) return null;
-    const day = upcomingSurgeries.find((s) => s.date === expandedDay);
-    if (!day) return null;
-
-    const supplyTotals: Record<string, { qty: number; unitCost: number; totalCost: number }> = {};
-    let grandTotal = 0;
-
-    for (const [procType, count] of Object.entries(day.types)) {
-      const profile = procedureSupplyProfiles[procType];
-      if (!profile) continue;
-      for (const item of profile) {
-        const needed = item.qty * count;
-        const cost = needed * item.unitCost;
-        if (supplyTotals[item.supply]) {
-          supplyTotals[item.supply].qty += needed;
-          supplyTotals[item.supply].totalCost += cost;
-        } else {
-          supplyTotals[item.supply] = { qty: needed, unitCost: item.unitCost, totalCost: cost };
-        }
-        grandTotal += cost;
-      }
-    }
-
-    return { items: Object.entries(supplyTotals).sort((a, b) => b[1].totalCost - a[1].totalCost), grandTotal };
-  }, [expandedDay]);
-
-  // Weekly totals from surgery schedule
-  const weeklySupplyCost = upcomingSurgeries.reduce((total, day) => {
-    let dayCost = 0;
-    for (const [procType, count] of Object.entries(day.types)) {
-      const profile = procedureSupplyProfiles[procType];
-      if (profile) {
-        for (const item of profile) dayCost += item.qty * item.unitCost * count;
-      }
-    }
-    return total + dayCost;
-  }, 0);
-
-  const totalProcedures = upcomingSurgeries.reduce((s, d) => s + d.procedures, 0);
-
   return (
     <div className="min-h-screen">
       <Header
-        title="Forecasting & Predictions"
+        title="Forecasting"
         subtitle="What the hospital will need next week, next month, and how to prepare"
       />
 
       <div className="p-8 space-y-6">
         {/* Overview cards */}
-        <div className="grid grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl border border-border p-5">
-            <div className="flex items-center gap-2 mb-2"><Calendar className="w-4 h-4 text-accent" /><span className="text-[11px] font-medium text-muted uppercase">OR Schedule — Next 5 Days</span></div>
-            <p className="text-2xl font-bold text-foreground">{totalProcedures} <span className="text-xs font-normal text-muted">surgeries</span></p>
-            <p className="text-[11px] text-muted">across 6 ORs</p>
-            <p className="text-xs text-primary font-semibold mt-1">${weeklySupplyCost.toLocaleString()} in supplies needed</p>
-          </div>
+        <div className="grid grid-cols-3 gap-4">
           <div className="bg-white rounded-xl border border-border p-5">
             <div className="flex items-center gap-2 mb-2"><TrendingUp className="w-4 h-4 text-primary" /><span className="text-[11px] font-medium text-muted uppercase">Predicted Daily Consumption</span></div>
             <p className="text-2xl font-bold text-foreground">3,050 <span className="text-xs font-normal text-muted">items/day by Mar 29</span></p>
@@ -138,7 +79,7 @@ export default function ForecastingPage() {
           <div className="bg-white rounded-xl border border-border p-5">
             <div className="flex items-center gap-2 mb-2"><Brain className="w-4 h-4 text-accent" /><span className="text-[11px] font-medium text-muted uppercase">April Spend Forecast</span></div>
             <p className="text-2xl font-bold text-foreground">$942K</p>
-            <p className="text-xs text-red-600 font-medium mt-1">$32K over budget — flu surge + OR volume</p>
+            <p className="text-xs text-red-600 font-medium mt-1">$32K over budget — seasonal surge</p>
           </div>
         </div>
 
@@ -219,158 +160,6 @@ export default function ForecastingPage() {
               </ComposedChart>
             </ResponsiveContainer>
           </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* SECTION 3: Surgery → Supply Needs                             */}
-        {/* ============================================================ */}
-        <div className="bg-white rounded-xl border border-border p-6">
-          <div className="mb-5">
-            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-accent" />
-              OR Schedule & Preference Cards
-            </h3>
-            <p className="text-xs text-muted mt-1 max-w-3xl leading-relaxed">
-              Each surgeon&apos;s preference card defines the exact supplies and implants needed. Click a day to see the case-by-case breakdown.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-5 gap-3 mb-4">
-            {upcomingSurgeries.map((day) => {
-              const isExpanded = expandedDay === day.date;
-              let dayCost = 0;
-              for (const [procType, count] of Object.entries(day.types)) {
-                const profile = procedureSupplyProfiles[procType];
-                if (profile) { for (const item of profile) dayCost += item.qty * item.unitCost * count; }
-              }
-
-              return (
-                <button key={day.date} onClick={() => setExpandedDay(isExpanded ? null : day.date)}
-                  className={cn("p-4 rounded-xl border text-left transition-all", isExpanded ? "border-primary bg-primary/5 ring-1 ring-primary/20" : "border-border hover:border-primary/30 hover:bg-stone-50")}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-bold text-foreground">{day.date}</span>
-                    <span className="text-[11px] text-muted">{day.day}</span>
-                  </div>
-                  <p className="text-lg font-bold text-foreground">{day.procedures} <span className="text-xs font-normal text-muted">surgeries</span></p>
-                  <p className="text-xs font-semibold text-primary mt-1">${dayCost.toLocaleString()} <span className="text-[11px] font-normal text-muted">in supplies</span></p>
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {Object.entries(day.types).map(([type, count]) => (
-                      <span key={type} className="text-[11px] px-1.5 py-0.5 rounded bg-stone-100 text-muted">{count}x {type}</span>
-                    ))}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {expandedDay && daySupplyBreakdown && (
-            <div className="rounded-xl border border-primary/20 bg-primary/[0.02] p-5">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground">Supply Requirements for {expandedDay}</h4>
-                  <p className="text-xs text-muted mt-0.5">Items that must be stocked in the OR before the day&apos;s surgeries begin</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-primary">${daySupplyBreakdown.grandTotal.toLocaleString()}</p>
-                  <p className="text-[11px] text-muted">Total supply cost</p>
-                </div>
-              </div>
-              {/* Case List */}
-              {(() => {
-                const day = upcomingSurgeries.find((s) => s.date === expandedDay);
-                if (!day || !("cases" in day)) return null;
-                const cases = (day as any).cases as { procedure: string; surgeon: string; or: string; time: string }[];
-                return (
-                  <div className="mb-4">
-                    <h5 className="text-xs font-semibold text-muted uppercase mb-2">Case Schedule</h5>
-                    <div className="grid grid-cols-1 gap-1.5">
-                      {cases.map((c, i) => {
-                        const card = preferenceCards.find((pc) => pc.surgeon === c.surgeon && pc.procedure === c.procedure);
-                        return (
-                          <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white border border-border text-xs">
-                            <span className="font-mono text-muted w-12">{c.time}</span>
-                            <span className="font-mono text-muted w-12">{c.or}</span>
-                            <span className="font-semibold text-foreground flex-1">{c.procedure}</span>
-                            <span className="text-foreground">{c.surgeon}</span>
-                            {card && (
-                              <span className="text-[11px] px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium">Pref Card</span>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })()}
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left text-[11px] font-semibold text-muted uppercase px-3 py-2">Supply Item</th>
-                    <th className="text-right text-[11px] font-semibold text-muted uppercase px-3 py-2">Qty Needed</th>
-                    <th className="text-right text-[11px] font-semibold text-muted uppercase px-3 py-2">Unit Cost</th>
-                    <th className="text-right text-[11px] font-semibold text-muted uppercase px-3 py-2">Line Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {daySupplyBreakdown.items.map(([name, data]) => (
-                    <tr key={name} className="border-b border-border/50">
-                      <td className="px-3 py-2 text-sm text-foreground">{name}</td>
-                      <td className="px-3 py-2 text-sm text-foreground text-right">{data.qty}</td>
-                      <td className="px-3 py-2 text-sm text-muted text-right">${data.unitCost.toFixed(2)}</td>
-                      <td className="px-3 py-2 text-sm font-semibold text-foreground text-right">${data.totalCost.toFixed(2)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="mt-4 space-y-2">
-                <div className="p-3 rounded-lg bg-red-50 border border-red-200 flex items-start gap-2">
-                  <AlertOctagon className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                  <div className="text-xs text-red-800">
-                    <span className="font-semibold">Shortfall: Vicryl 3-0 Suture</span> — Need {daySupplyBreakdown.items.find(([n]) => n.includes("Vicryl"))?.[1].qty || 0} units, only 15 in stock. PO-4522 pending approval.
-                  </div>
-                </div>
-              </div>
-              {/* Consignment Implants */}
-              {(() => {
-                const day = upcomingSurgeries.find((s) => s.date === expandedDay);
-                if (!day || !("cases" in day)) return null;
-                const cases = (day as any).cases as { procedure: string; surgeon: string; or: string; time: string }[];
-                const implants: { item: string; vendor: string; rep: string; cost: number; surgeon: string; procedure: string }[] = [];
-                for (const c of cases) {
-                  const card = preferenceCards.find((pc) => pc.surgeon === c.surgeon && pc.procedure === c.procedure);
-                  if (card?.implants) {
-                    for (const imp of card.implants) {
-                      implants.push({ item: imp.item, vendor: imp.vendor, rep: imp.rep, cost: imp.estimatedCost, surgeon: c.surgeon, procedure: c.procedure });
-                    }
-                  }
-                }
-                if (implants.length === 0) return null;
-                return (
-                  <div className="mt-4 p-4 rounded-xl border border-amber-200 bg-amber-50/50">
-                    <h5 className="text-xs font-semibold text-amber-800 uppercase mb-3 flex items-center gap-1.5">
-                      Consignment Implants Required — {implants.length} devices, {new Set(implants.map((i) => i.rep)).size} vendor reps to coordinate
-                    </h5>
-                    <div className="space-y-2">
-                      {implants.map((imp, i) => (
-                        <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white border border-amber-100 text-xs">
-                          <div className="flex-1">
-                            <span className="font-semibold text-foreground">{imp.item}</span>
-                            <span className="text-muted ml-2">for {imp.surgeon} — {imp.procedure}</span>
-                          </div>
-                          <span className="text-muted">{imp.vendor}</span>
-                          <span className="text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">Rep: {imp.rep}</span>
-                          <span className="font-semibold text-foreground">${imp.cost.toLocaleString()}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-amber-200">
-                      <span className="text-xs text-amber-700 font-medium">Total consignment value: ${implants.reduce((s, i) => s + i.cost, 0).toLocaleString()}</span>
-                    </div>
-                  </div>
-                );
-              })()}
-            </div>
-          )}
         </div>
 
         {/* ============================================================ */}
