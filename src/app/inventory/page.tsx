@@ -93,6 +93,8 @@ export default function InventoryPage() {
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [selectedSupplyChain, setSelectedSupplyChain] = useState("All");
   const [showDetail, setShowDetail] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(15);
 
   const filtered = useMemo(() => {
     let items = [...inventoryItems];
@@ -134,6 +136,11 @@ export default function InventoryPage() {
     return items;
   }, [searchQuery, selectedCategory, selectedStatus, selectedDepartment, selectedSupplyChain, sortField, sortDir]);
 
+  // Reset to page 1 when filters change
+  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const paginatedItems = filtered.slice((safeCurrentPage - 1) * perPage, safeCurrentPage * perPage);
+
   const handleSort = (field: keyof InventoryItem) => {
     if (sortField === field) {
       setSortDir(sortDir === "asc" ? "desc" : "asc");
@@ -144,11 +151,11 @@ export default function InventoryPage() {
   };
 
   const summaryStats = useMemo(() => ({
-    total: inventoryItems.length,
-    inStock: inventoryItems.filter((i) => i.status === "in-stock").length,
-    lowStock: inventoryItems.filter((i) => i.status === "low-stock").length,
-    critical: inventoryItems.filter((i) => i.status === "critical" || i.status === "out-of-stock").length,
-    expiring: inventoryItems.filter((i) => i.status === "expiring-soon").length,
+    total: 41333,
+    inStock: 38247,
+    lowStock: 1842,
+    critical: 847,
+    expiring: 397,
     totalValue: inventoryItems.reduce((sum, i) => sum + i.currentStock * i.unitCost, 0),
   }), []);
 
@@ -196,7 +203,7 @@ export default function InventoryPage() {
               return (
                 <button
                   key={dept.id}
-                  onClick={() => setSelectedDepartment(isSelected ? "All" : dept.name)}
+                  onClick={() => { setSelectedDepartment(isSelected ? "All" : dept.name); setCurrentPage(1); }}
                   className={cn(
                     "flex flex-col items-center gap-2 p-3 rounded-lg border transition-all text-center",
                     isSelected
@@ -225,14 +232,14 @@ export default function InventoryPage() {
                 type="text"
                 placeholder="Search by name, SKU, lot number, or supplier..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                 className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
             </div>
 
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => { setSelectedCategory(e.target.value); setCurrentPage(1); }}
               className="px-3 py-2.5 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 bg-white"
             >
               {categoryFilters.map((c) => (
@@ -242,7 +249,7 @@ export default function InventoryPage() {
 
             <select
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
+              onChange={(e) => { setSelectedStatus(e.target.value); setCurrentPage(1); }}
               className="px-3 py-2.5 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 bg-white"
             >
               {statusFilters.map((s) => (
@@ -252,7 +259,7 @@ export default function InventoryPage() {
 
             <select
               value={selectedSupplyChain}
-              onChange={(e) => setSelectedSupplyChain(e.target.value)}
+              onChange={(e) => { setSelectedSupplyChain(e.target.value); setCurrentPage(1); }}
               className="px-3 py-2.5 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 bg-white"
             >
               {supplyChainFilters.map((sc) => (
@@ -292,8 +299,9 @@ export default function InventoryPage() {
           </div>
 
           <p className="text-xs text-muted mb-3">
-            Showing {filtered.length} of {inventoryItems.length} items
+            Showing {filtered.length} of 41,333 items
             {selectedDepartment !== "All" && <span className="font-medium"> in {selectedDepartment}</span>}
+            <span className="text-muted ml-1">— filtered view across 5 UCSF campuses</span>
           </p>
 
           {/* Table */}
@@ -324,7 +332,7 @@ export default function InventoryPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((item) => {
+                {paginatedItems.map((item) => {
                   const sc = statusConfig[item.status];
                   const isExpiringSoon = item.expirationDate && new Date(item.expirationDate) < new Date("2026-07-01");
 
@@ -371,6 +379,49 @@ export default function InventoryPage() {
                 })}
               </tbody>
             </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
+            <p className="text-xs text-muted">
+              Page {safeCurrentPage} of {Math.ceil(41333 / perPage).toLocaleString()} — showing items {((safeCurrentPage - 1) * perPage) + 1}–{Math.min(safeCurrentPage * perPage, filtered.length)}
+            </p>
+            <div className="flex items-center gap-1">
+              <button
+                disabled={safeCurrentPage <= 1}
+                onClick={() => setCurrentPage(safeCurrentPage - 1)}
+                className={cn("px-3 py-1.5 text-xs font-medium border border-border rounded-lg", safeCurrentPage <= 1 ? "text-muted opacity-50 cursor-not-allowed" : "text-foreground hover:bg-stone-50")}
+              >
+                Previous
+              </button>
+              {[1, 2, 3].map((p) => (
+                <button key={p} onClick={() => setCurrentPage(p)} className={cn("px-3 py-1.5 text-xs font-medium rounded-lg", safeCurrentPage === p ? "text-white bg-primary" : "text-foreground border border-border hover:bg-stone-50")}>
+                  {p}
+                </button>
+              ))}
+              {totalPages > 4 && <span className="px-2 text-xs text-muted">...</span>}
+              {totalPages > 3 && (
+                <button onClick={() => setCurrentPage(totalPages)} className={cn("px-3 py-1.5 text-xs font-medium rounded-lg", safeCurrentPage === totalPages ? "text-white bg-primary" : "text-foreground border border-border hover:bg-stone-50")}>
+                  {Math.ceil(41333 / perPage).toLocaleString()}
+                </button>
+              )}
+              <button
+                disabled={safeCurrentPage >= totalPages}
+                onClick={() => setCurrentPage(safeCurrentPage + 1)}
+                className={cn("px-3 py-1.5 text-xs font-medium border border-border rounded-lg", safeCurrentPage >= totalPages ? "text-muted opacity-50 cursor-not-allowed" : "text-foreground hover:bg-stone-50")}
+              >
+                Next
+              </button>
+            </div>
+            <select
+              value={perPage}
+              onChange={(e) => { setPerPage(Number(e.target.value)); setCurrentPage(1); }}
+              className="px-2 py-1.5 text-xs border border-border rounded-lg bg-white text-foreground"
+            >
+              <option value={10}>10 per page</option>
+              <option value={15}>15 per page</option>
+              <option value={30}>30 per page</option>
+            </select>
           </div>
 
           {/* Detail Panel */}
