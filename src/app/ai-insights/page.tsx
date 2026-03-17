@@ -61,10 +61,8 @@ const typeIcons: Record<string, typeof Brain> = {
   prediction: TrendingUp, anomaly: Zap, recommendation: Target, outbreak: Activity, "cost-saving": Sparkles,
 };
 
-// Current-state alerts only (anomaly, cost-saving, recommendation)
-const currentStateInsights = aiInsights.filter(
-  (i) => i.type === "anomaly" || i.type === "cost-saving" || i.type === "recommendation"
-);
+// All AI alerts — outbreak intel, predictions, anomalies, recommendations, cost-saving
+const currentStateInsights = aiInsights;
 
 // Summary stats computed from inventory
 const totalItems = inventoryItems.length;
@@ -300,10 +298,10 @@ export default function AIInsightsPage() {
         <div>
           <h3 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
             <Zap className="w-5 h-5 text-accent" />
-            AI Alerts — Anomalies & Recommendations
+            AI Alerts — Outbreak Intel, Predictions & Recommendations
           </h3>
           <p className="text-xs text-muted mb-4">
-            Issues the AI has detected in current inventory patterns — unusual consumption, cost-saving opportunities, and compliance gaps.
+            Outbreak intelligence, demand predictions, anomaly detection, cost-saving opportunities, and compliance gaps detected by the AI.
           </p>
           <div className="space-y-4">
             {currentStateInsights.map((insight) => {
