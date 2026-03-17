@@ -377,7 +377,7 @@ export default function InventoryPage() {
           {/* Pagination */}
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
             <p className="text-xs text-muted">
-              Page 1 of 2,756 — showing items 1–15
+              Page 1 of 517 — showing items 1–80
             </p>
             <div className="flex items-center gap-1">
               <button disabled className="px-3 py-1.5 text-xs font-medium text-muted border border-border rounded-lg opacity-50 cursor-not-allowed">
@@ -387,16 +387,16 @@ export default function InventoryPage() {
               <button className="px-3 py-1.5 text-xs font-medium text-foreground border border-border rounded-lg hover:bg-stone-50">2</button>
               <button className="px-3 py-1.5 text-xs font-medium text-foreground border border-border rounded-lg hover:bg-stone-50">3</button>
               <span className="px-2 text-xs text-muted">...</span>
-              <button className="px-3 py-1.5 text-xs font-medium text-foreground border border-border rounded-lg hover:bg-stone-50">2,756</button>
+              <button className="px-3 py-1.5 text-xs font-medium text-foreground border border-border rounded-lg hover:bg-stone-50">517</button>
               <button className="px-3 py-1.5 text-xs font-medium text-foreground border border-border rounded-lg hover:bg-stone-50">
                 Next
               </button>
             </div>
             <select className="px-2 py-1.5 text-xs border border-border rounded-lg bg-white text-foreground">
-              <option>15 per page</option>
-              <option>25 per page</option>
-              <option>50 per page</option>
+              <option>80 per page</option>
               <option>100 per page</option>
+              <option>200 per page</option>
+              <option>500 per page</option>
             </select>
           </div>
 
