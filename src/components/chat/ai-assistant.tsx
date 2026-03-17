@@ -542,7 +542,7 @@ export function AIAssistant() {
       {/* ----- Floating trigger button ----- */}
       <button
         onClick={() => setIsOpen(true)}
-        aria-label="Open AI Assistant"
+        aria-label="Open AI Agent"
         className={cn(
           "fixed bottom-6 right-6 z-50 flex items-center justify-center",
           "w-14 h-14 rounded-full shadow-lg",
@@ -579,12 +579,12 @@ export function AIAssistant() {
               Health Canopy AI
             </h2>
             <p className="text-white/60 text-xs">
-              Inventory intelligence assistant
+              Inventory intelligence agent
             </p>
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            aria-label="Close AI Assistant"
+            aria-label="Close AI Agent"
             className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors"
           >
             <X className="w-4 h-4" />
@@ -601,7 +601,7 @@ export function AIAssistant() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">
-                  Hi! I&apos;m your inventory AI assistant.
+                  Hi! I&apos;m your inventory AI agent.
                 </p>
                 <p className="text-xs text-muted mt-1 leading-relaxed max-w-[280px] mx-auto">
                   I have real-time access to UCSF&apos;s inventory across all 5

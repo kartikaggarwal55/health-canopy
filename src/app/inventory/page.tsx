@@ -268,7 +268,7 @@ export default function InventoryPage() {
             </select>
 
             <button
-              onClick={() => showToast("Add Item requires ERP integration — use the AI assistant to draft a new item request", "info")}
+              onClick={() => showToast("Add Item requires ERP integration — use the AI agent to draft a new item request", "info")}
               className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors"
             >
               <Plus className="w-4 h-4" />
